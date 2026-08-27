@@ -9,99 +9,69 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#E8ECEA;
-  --card:#FBFCFB;
-  --ink:#0D1815;
-  --ink-2:#57665F;
-  --ink-3:#899690;
-  --rule:#C6D0CB;
-  --rule-2:#DCE3E0;
-  --lane:#DBE3DF;
-  --band:#CDDAD4;
-  --trace:#13454F;
-  --signal:#A63D18;
+  --paper:#E8ECEA; --card:#FBFCFB; --ink:#0D1815; --ink-2:#57665F; --ink-3:#899690;
+  --rule:#C6D0CB; --rule-2:#DCE3E0; --lane:#DBE3DF; --band:#CDDAD4;
+  --trace:#13454F; --signal:#A63D18; --warn:#8A6A16;
   --display:'Archivo',system-ui,sans-serif;
   --body:'Archivo',system-ui,-apple-system,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
-body{
-  background:var(--paper);color:var(--ink);font-family:var(--body);
-  font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;
-  padding-bottom:64px;
-}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;padding-bottom:64px}
 button,input,select,textarea{font:inherit;color:inherit}
 a{color:var(--trace)}
+.eyebrow{font-family:var(--display);font-variation-settings:'wdth' 118;text-transform:uppercase;letter-spacing:.14em;font-size:10.5px;font-weight:600;color:var(--ink-3)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 
-/* ---------- structural type ---------- */
-.eyebrow{
-  font-family:var(--display);font-variation-settings:'wdth' 118;
-  text-transform:uppercase;letter-spacing:.14em;font-size:10.5px;font-weight:600;
-  color:var(--ink-3);
-}
-.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
-
-/* ---------- shell ---------- */
+/* shell */
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
 header.top{border-bottom:1px solid var(--rule);background:var(--paper);position:sticky;top:0;z-index:20}
 .masthead{display:flex;align-items:baseline;gap:14px;padding:18px 0 12px;flex-wrap:wrap}
-.wordmark{
-  font-family:var(--display);font-variation-settings:'wdth' 125;font-weight:700;
-  text-transform:uppercase;letter-spacing:.1em;font-size:19px;margin:0;line-height:1;
-}
+.wordmark{font-family:var(--display);font-variation-settings:'wdth' 125;font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:19px;margin:0;line-height:1}
 .masthead .eyebrow{margin-left:auto}
 nav.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
 nav.tabs::-webkit-scrollbar{display:none}
-.tab{
-  background:none;border:0;border-bottom:2px solid transparent;cursor:pointer;
-  padding:8px 13px 9px;white-space:nowrap;color:var(--ink-2);
-  font-family:var(--display);font-variation-settings:'wdth' 112;
-  text-transform:uppercase;letter-spacing:.1em;font-size:11px;font-weight:600;
-}
+.tab{background:none;border:0;border-bottom:2px solid transparent;cursor:pointer;padding:8px 13px 9px;white-space:nowrap;color:var(--ink-2);font-family:var(--display);font-variation-settings:'wdth' 112;text-transform:uppercase;letter-spacing:.1em;font-size:11px;font-weight:600}
 .tab:hover{color:var(--ink)}
 .tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--signal)}
 .tab:focus-visible{outline:2px solid var(--trace);outline-offset:-2px}
-
 main{padding-top:26px}
 section[hidden]{display:none}
 
-/* ---------- specimen header ---------- */
+/* specimen header */
 .specimen{border-bottom:1px solid var(--rule);padding-bottom:20px;margin-bottom:26px}
-.specimen-date{
-  font-family:var(--display);font-variation-settings:'wdth' 122;font-weight:700;
-  font-size:clamp(30px,6.5vw,46px);line-height:1;letter-spacing:-.01em;margin:6px 0 0;
-}
+.specimen-date{font-family:var(--display);font-variation-settings:'wdth' 122;font-weight:700;font-size:clamp(28px,6vw,44px);line-height:1;letter-spacing:-.01em;margin:6px 0 0}
 .specimen-meta{display:flex;gap:28px;flex-wrap:wrap;margin-top:16px}
-.stat{min-width:0}
 .stat .v{font-family:var(--mono);font-size:20px;font-weight:500;display:block;line-height:1.1}
 .stat .v.flag{color:var(--signal)}
+.stat .v.warn{color:var(--warn)}
 .stat .k{display:block;margin-top:3px}
 
-/* ---------- panel blocks ---------- */
+/* panel rows */
 .panel{margin-bottom:26px}
 .panel-head{display:flex;align-items:center;gap:12px;margin-bottom:2px}
 .panel-head .rule{flex:1;height:1px;background:var(--rule)}
 .rows{background:var(--card);border:1px solid var(--rule-2)}
-.row{
-  display:grid;grid-template-columns:minmax(0,1.5fr) 86px 74px minmax(120px,1fr) 96px;
-  align-items:center;gap:10px;padding:9px 14px;border-top:1px solid var(--rule-2);
-}
-.rows .row:first-child{border-top:0}
-.row .name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row{display:grid;grid-template-columns:minmax(0,1.5fr) 84px 72px minmax(110px,1fr) 92px;align-items:center;gap:10px;padding:9px 14px;border-top:1px solid var(--rule-2)}
+.rows > *:first-child{border-top:0}
+.row .name{min-width:0;display:flex;align-items:center;gap:6px}
+.row .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .row .val{font-family:var(--mono);font-size:16px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
 .row .val.out{color:var(--signal)}
-.row .unit{font-size:11.5px;color:var(--ink-3);font-family:var(--mono)}
-.row .refs{font-size:11.5px;color:var(--ink-3);font-family:var(--mono);text-align:right}
-.row .delta{font-size:11.5px;font-family:var(--mono);color:var(--ink-2);text-align:right}
-@media(max-width:720px){
-  .row{grid-template-columns:minmax(0,1fr) 78px 66px;grid-template-areas:'n v u' 'l l l';row-gap:7px}
-  .row .name{grid-area:n}.row .val{grid-area:v}.row .unit{grid-area:u}
-  .row .lane-wrap{grid-area:l}
+.row .unit,.row .refs,.row .delta{font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.row .refs,.row .delta{text-align:right}
+.row .delta{color:var(--ink-2)}
+.info{background:none;border:1px solid var(--rule);color:var(--ink-3);cursor:pointer;width:16px;height:16px;border-radius:50%;font-size:10px;line-height:1;padding:0;flex:none;font-family:var(--display);font-weight:700}
+.info:hover{border-color:var(--ink);color:var(--ink)}
+.info:focus-visible{outline:2px solid var(--trace);outline-offset:1px}
+.defrow{padding:0 14px 13px 34px;font-size:13px;color:var(--ink-2);background:var(--card);max-width:72ch}
+.defrow[hidden]{display:none}
+@media(max-width:760px){
+  .row{grid-template-columns:minmax(0,1fr) 76px 62px;grid-template-areas:'n v u' 'l l l';row-gap:7px}
+  .row .name{grid-area:n}.row .val{grid-area:v}.row .unit{grid-area:u}.row .lane-wrap{grid-area:l}
   .row .refs,.row .delta{display:none}
 }
-
-/* lane marker */
 .lane-wrap{position:relative;height:16px;display:flex;align-items:center}
 .lane-track{position:absolute;left:0;right:0;height:2px;background:var(--lane)}
 .lane-band{position:absolute;height:9px;background:var(--band);top:50%;transform:translateY(-50%)}
@@ -109,102 +79,128 @@ section[hidden]{display:none}
 .lane-tick.out{background:var(--signal);width:3px}
 .lane-none{font-size:11px;color:var(--ink-3);font-family:var(--mono)}
 
-/* ---------- trends ---------- */
+/* dashboard */
+.watch{margin-bottom:28px}
+.watch-head{display:flex;align-items:baseline;gap:12px;margin-bottom:9px}
+.watch-head .rule{flex:1;height:1px;background:var(--rule)}
+.watch-head .cnt{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.watch-why{font-size:12.5px;color:var(--ink-2);margin:0 0 11px;max-width:70ch}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(272px,1fr));gap:12px}
+.wcard{background:var(--card);border:1px solid var(--rule-2);border-left:3px solid var(--rule);padding:11px 13px}
+.wcard.sev-out{border-left-color:var(--signal)}
+.wcard.sev-near{border-left-color:var(--warn)}
+.wcard.sev-ok{border-left-color:var(--trace)}
+.wc-top{display:flex;align-items:baseline;gap:7px}
+.wc-name{font-weight:600;font-size:13.5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wc-val{margin-left:auto;font-family:var(--mono);font-size:15px;font-weight:500;white-space:nowrap}
+.wc-val.out{color:var(--signal)}
+.wc-msg{font-size:12.5px;color:var(--ink-2);margin:5px 0 7px}
+.wc-msg b{font-weight:600;color:var(--ink)}
+.wc-foot{display:flex;justify-content:space-between;gap:8px;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:5px}
+svg.spark{display:block;width:100%;height:auto;overflow:visible}
+
+/* trends */
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:20px}
-.chip{
-  border:1px solid var(--rule);background:transparent;cursor:pointer;padding:5px 11px;
-  font-family:var(--display);font-variation-settings:'wdth' 110;text-transform:uppercase;
-  letter-spacing:.09em;font-size:10.5px;font-weight:600;color:var(--ink-2);border-radius:2px;
-}
+.chip{border:1px solid var(--rule);background:transparent;cursor:pointer;padding:5px 11px;font-family:var(--display);font-variation-settings:'wdth' 110;text-transform:uppercase;letter-spacing:.09em;font-size:10.5px;font-weight:600;color:var(--ink-2);border-radius:2px}
 .chip:hover{border-color:var(--ink-3);color:var(--ink)}
 .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 .chip:focus-visible{outline:2px solid var(--trace);outline-offset:2px}
-input[type="search"],input[type="text"],input[type="date"],input[type="number"],select,textarea{
-  background:var(--card);border:1px solid var(--rule);padding:7px 10px;border-radius:2px;
-  font-size:14px;color:var(--ink);
-}
+input[type="search"],input[type="text"],input[type="date"],input[type="number"],input[type="password"],select,textarea{background:var(--card);border:1px solid var(--rule);padding:7px 10px;border-radius:2px;font-size:14px;color:var(--ink);width:100%}
 input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--trace);outline-offset:-1px;border-color:var(--trace)}
-input[type="number"],input[type="date"]{font-family:var(--mono)}
+input[type="number"],input[type="date"],input[type="password"]{font-family:var(--mono)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
-.chart-card{background:var(--card);border:1px solid var(--rule-2);padding:13px 14px 8px}
-.cc-head{display:flex;align-items:baseline;gap:8px;margin-bottom:9px}
+.chart-card{background:var(--card);border:1px solid var(--rule-2);padding:13px 14px 9px}
+.cc-head{display:flex;align-items:baseline;gap:7px;margin-bottom:9px}
 .cc-name{font-weight:600;font-size:13.5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cc-unit{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);white-space:nowrap}
 .cc-last{margin-left:auto;font-family:var(--mono);font-size:15px;font-weight:500}
 .cc-last.out{color:var(--signal)}
 .cc-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:5px;padding-top:7px;border-top:1px solid var(--rule-2)}
 .cc-ref{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
-.linkbtn{background:none;border:0;padding:2px 0;cursor:pointer;font-size:10.5px;color:var(--ink-3);text-decoration:underline;text-underline-offset:2px;font-family:var(--display);letter-spacing:.05em;text-transform:uppercase;font-weight:600}
+.cc-def{font-size:12.5px;color:var(--ink-2);margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--rule)}
+.linkbtn{background:none;border:0;padding:2px 0;cursor:pointer;font-size:10.5px;color:var(--ink-3);text-decoration:underline;text-underline-offset:2px;font-family:var(--display);letter-spacing:.05em;text-transform:uppercase;font-weight:600;white-space:nowrap}
 .linkbtn:hover{color:var(--signal)}
+.linkbtn:focus-visible{outline:2px solid var(--trace);outline-offset:2px}
 svg.trend{display:block;width:100%;height:auto;overflow:visible}
-.trend .band{fill:var(--band)}
-.trend .gridline{stroke:var(--rule-2);stroke-width:1}
+.trend .band,.spark .band{fill:var(--band)}
 .trend .axis{stroke:var(--rule);stroke-width:1}
-.trend .line{fill:none;stroke:var(--trace);stroke-width:1.75;stroke-linejoin:round;stroke-linecap:round}
-.trend .dot{fill:var(--card);stroke:var(--trace);stroke-width:1.75}
-.trend .dot.out{fill:var(--signal);stroke:var(--signal)}
+.trend .line,.spark .line{fill:none;stroke:var(--trace);stroke-width:1.75;stroke-linejoin:round;stroke-linecap:round}
+.trend .dot,.spark .dot{fill:var(--card);stroke:var(--trace);stroke-width:1.75}
+.trend .dot.out,.spark .dot.out{fill:var(--signal);stroke:var(--signal)}
 .trend .tlabel{font-family:var(--mono);font-size:9px;fill:var(--ink-3)}
-.trend .hit{fill:transparent;cursor:pointer}
 .ovr{display:flex;gap:6px;align-items:center;margin-top:8px;padding-top:8px;border-top:1px dashed var(--rule)}
 .ovr input{width:74px;padding:4px 6px;font-size:12px}
 
-/* ---------- forms ---------- */
+/* forms */
 .form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:11px 16px}
 .field{display:flex;flex-direction:column;gap:4px}
 .field label{font-size:12px;color:var(--ink-2)}
-.field .hint{font-family:var(--mono);font-size:10px;color:var(--ink-3)}
-.entry-row{display:grid;grid-template-columns:minmax(0,1fr) 92px 62px;gap:8px;align-items:center;padding:6px 0;border-top:1px solid var(--rule-2)}
+.field .hint{font-family:var(--mono);font-size:10px;color:var(--ink-3);line-height:1.4}
+.entry-row{display:grid;grid-template-columns:minmax(0,1fr) 90px 58px;gap:8px;align-items:center;padding:6px 0;border-top:1px solid var(--rule-2)}
 .entry-row:first-of-type{border-top:0}
-.entry-row .en{font-size:13.5px;min-width:0}
+.entry-row .en{font-size:13.5px;min-width:0;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .entry-row .eu{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
 .entry-row input{text-align:right;font-family:var(--mono)}
 .entry-row input.out{border-color:var(--signal);color:var(--signal)}
-.btn{
-  background:var(--ink);color:var(--paper);border:1px solid var(--ink);cursor:pointer;
-  padding:9px 18px;border-radius:2px;font-family:var(--display);
-  font-variation-settings:'wdth' 112;text-transform:uppercase;letter-spacing:.1em;
-  font-size:11px;font-weight:600;
-}
+.entry-row input.derived{color:var(--ink-3)}
+.entry-def{font-size:12.5px;color:var(--ink-2);padding:0 0 8px 0;max-width:70ch}
+.btn{background:var(--ink);color:var(--paper);border:1px solid var(--ink);cursor:pointer;padding:9px 18px;border-radius:2px;font-family:var(--display);font-variation-settings:'wdth' 112;text-transform:uppercase;letter-spacing:.1em;font-size:11px;font-weight:600}
 .btn:hover{background:#000}
+.btn:disabled{opacity:.45;cursor:default}
 .btn.ghost{background:transparent;color:var(--ink)}
 .btn.ghost:hover{background:var(--rule-2)}
 .btn.danger{background:transparent;color:var(--signal);border-color:var(--signal)}
 .btn.danger:hover{background:var(--signal);color:var(--card)}
 .btn:focus-visible{outline:2px solid var(--trace);outline-offset:2px}
-.btnrow{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:20px}
+.btnrow{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:18px}
 .block{background:var(--card);border:1px solid var(--rule-2);padding:17px 18px;margin-bottom:16px}
 
-/* ---------- data table ---------- */
+/* analysis */
+.analysis{background:var(--card);border:1px solid var(--rule-2);border-top:3px solid var(--trace);padding:17px 18px;margin-bottom:26px}
+.an-body{font-size:14.5px;line-height:1.6;max-width:74ch;margin-top:12px}
+.an-body h4{font-family:var(--display);font-variation-settings:'wdth' 115;text-transform:uppercase;letter-spacing:.1em;font-size:11px;font-weight:700;color:var(--ink-3);margin:18px 0 6px}
+.an-body p{margin:0 0 10px}
+.an-body ul{margin:0 0 10px;padding-left:20px}
+.an-body li{margin-bottom:5px}
+.an-body strong{font-weight:600}
+.an-disclaim{font-size:11.5px;color:var(--ink-3);margin-top:14px;padding-top:11px;border-top:1px solid var(--rule-2);max-width:74ch}
+.spinner{display:inline-block;width:11px;height:11px;border:2px solid var(--rule);border-top-color:var(--trace);border-radius:50%;animation:spin .7s linear infinite;vertical-align:-1px;margin-right:7px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* data */
 table.draws{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--rule-2)}
-table.draws th{
-  text-align:left;padding:8px 12px;border-bottom:1px solid var(--rule);
-  font-family:var(--display);font-variation-settings:'wdth' 112;text-transform:uppercase;
-  letter-spacing:.1em;font-size:10px;font-weight:600;color:var(--ink-3);
-}
+table.draws th{text-align:left;padding:8px 12px;border-bottom:1px solid var(--rule);font-family:var(--display);font-variation-settings:'wdth' 112;text-transform:uppercase;letter-spacing:.1em;font-size:10px;font-weight:600;color:var(--ink-3)}
 table.draws td{padding:8px 12px;border-top:1px solid var(--rule-2);font-size:13.5px;vertical-align:middle}
 table.draws td.d{font-family:var(--mono);white-space:nowrap}
 table.draws td.act{text-align:right;white-space:nowrap}
 table.draws .linkbtn{margin-left:10px}
-
 .empty{border:1px dashed var(--rule);padding:34px 22px;text-align:center;color:var(--ink-2)}
 .empty p{margin:0 0 14px}
-.note{font-size:12.5px;color:var(--ink-2);margin:10px 0 0}
-.toast{
-  position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);
-  color:var(--paper);padding:10px 18px;border-radius:2px;font-size:13px;z-index:60;
-  opacity:0;pointer-events:none;transition:opacity .18s
-}
+.note{font-size:12.5px;color:var(--ink-2);margin:10px 0 0;max-width:74ch}
+.note.tight{margin-top:5px}
+.sync-state{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:2px;font-size:13px;z-index:60;opacity:0;pointer-events:none;transition:opacity .18s;max-width:88vw;text-align:center}
 .toast.show{opacity:1}
+.printhead{display:none}
 
 @media (prefers-reduced-motion:no-preference){
   .trend .line{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:draw .55s ease-out forwards}
   @keyframes draw{to{stroke-dashoffset:0}}
 }
 @media print{
-  header.top,nav.tabs,.toolbar,.btnrow,.ovr,.linkbtn{display:none!important}
-  body{background:#fff;padding:0}
-  .rows,.chart-card,.block{border-color:#bbb}
-  .panel{break-inside:avoid}
+  header.top,nav.tabs,.toolbar,.btnrow,.ovr,.linkbtn,.info,.empty,.toast{display:none!important}
+  body{background:#fff;padding:0;font-size:11pt}
+  body.print-all section[hidden]{display:block!important}
+  body.print-all #view-add,body.print-all #view-data{display:none!important}
+  .defrow[hidden]{display:none!important}
+  .rows,.chart-card,.block,.wcard,.analysis{border-color:#bbb;background:#fff}
+  .panel,.wcard,.chart-card,.analysis{break-inside:avoid}
+  .grid{grid-template-columns:repeat(3,1fr)}
+  .wgrid{grid-template-columns:repeat(2,1fr)}
+  .printhead{display:block;border-bottom:2px solid #000;padding-bottom:8px;margin-bottom:18px}
+  .printhead h1{font-size:16pt;margin:0}
+  .printhead .sub{font-family:var(--mono);font-size:9pt;color:#555}
+  main{padding-top:0}
 }
 </style>
 </head>
@@ -217,7 +213,8 @@ table.draws .linkbtn{margin-left:10px}
       <span class="eyebrow" id="mastheadMeta"></span>
     </div>
     <nav class="tabs" role="tablist">
-      <button class="tab" role="tab" data-view="latest" aria-selected="true">Latest</button>
+      <button class="tab" role="tab" data-view="dash" aria-selected="true">Dashboard</button>
+      <button class="tab" role="tab" data-view="latest" aria-selected="false">Latest</button>
       <button class="tab" role="tab" data-view="trends" aria-selected="false">Trends</button>
       <button class="tab" role="tab" data-view="add" aria-selected="false">Add result</button>
       <button class="tab" role="tab" data-view="data" aria-selected="false">Data</button>
@@ -226,21 +223,24 @@ table.draws .linkbtn{margin-left:10px}
 </header>
 
 <main class="wrap">
-  <section id="view-latest" role="tabpanel"></section>
+  <div class="printhead"><h1>Lab record</h1><div class="sub" id="printSub"></div></div>
+  <section id="view-dash" role="tabpanel"></section>
+  <section id="view-latest" role="tabpanel" hidden></section>
   <section id="view-trends" role="tabpanel" hidden></section>
   <section id="view-add" role="tabpanel" hidden></section>
   <section id="view-data" role="tabpanel" hidden></section>
 </main>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
 <script>
 /* =========================================================================
    CATALOG
-   ref: {lo, hi}  — null bound means "no limit on that side"
-   ref may instead be {male:{lo,hi}, female:{lo,hi}} for sex-specific intervals
-   ref: null      — tracked but no reference interval (e.g. weight)
-   dlo/dhi        — display bounds used to size the lane when a bound is open
+   ref  {lo,hi} — null bound means no limit on that side
+        may be {male:{},female:{}} for sex-specific intervals
+        null for analytes with no reference interval (weight, waist)
+   dlo/dhi — display bounds used to size the lane when a bound is open
+   from    — {deps:[], fn} for values a lab calculates rather than measures
+   def     — plain-language definition shown in the dropdown
    ========================================================================= */
 const PANELS = [
   {key:'bmp',    name:'Basic metabolic'},
@@ -258,176 +258,267 @@ const PANELS = [
 ];
 
 const A = [
-  // ---- Basic metabolic ----
-  {k:'glucose',  p:'bmp', n:'Glucose, fasting',  u:'mg/dL', d:0, ref:{lo:70,hi:99}},
-  {k:'bun',      p:'bmp', n:'BUN',               u:'mg/dL', d:0, ref:{lo:7,hi:20}},
-  {k:'creat',    p:'bmp', n:'Creatinine',        u:'mg/dL', d:2, ref:{male:{lo:0.76,hi:1.27},female:{lo:0.57,hi:1.00}}},
-  {k:'bcratio',  p:'bmp', n:'BUN/creatinine ratio', u:'',   d:0, ref:{lo:9,hi:20}},
-  {k:'egfr',     p:'bmp', n:'eGFR',              u:'mL/min/1.73m²', d:0, ref:{lo:60,hi:null}, dhi:130},
-  {k:'sodium',   p:'bmp', n:'Sodium',            u:'mmol/L',d:0, ref:{lo:134,hi:144}},
-  {k:'potassium',p:'bmp', n:'Potassium',         u:'mmol/L',d:1, ref:{lo:3.5,hi:5.2}},
-  {k:'chloride', p:'bmp', n:'Chloride',          u:'mmol/L',d:0, ref:{lo:96,hi:106}},
-  {k:'co2',      p:'bmp', n:'CO₂ (bicarbonate)', u:'mmol/L',d:0, ref:{lo:20,hi:29}},
-  {k:'calcium',  p:'bmp', n:'Calcium',           u:'mg/dL', d:1, ref:{lo:8.7,hi:10.2}},
-  // ---- Liver (CMP adds these to the BMP) ----
-  {k:'protein',  p:'hep', n:'Protein, total',    u:'g/dL',  d:1, ref:{lo:6.0,hi:8.5}},
-  {k:'albumin',  p:'hep', n:'Albumin',           u:'g/dL',  d:1, ref:{lo:3.9,hi:4.9}},
-  {k:'globulin', p:'hep', n:'Globulin, total',   u:'g/dL',  d:1, ref:{lo:1.5,hi:4.5}},
-  {k:'agratio',  p:'hep', n:'A/G ratio',         u:'',      d:1, ref:{lo:1.2,hi:2.2}},
-  {k:'bili',     p:'hep', n:'Bilirubin, total',  u:'mg/dL', d:1, ref:{lo:0.0,hi:1.2}},
-  {k:'alp',      p:'hep', n:'Alkaline phosphatase',u:'IU/L',d:0, ref:{lo:44,hi:121}},
-  {k:'ast',      p:'hep', n:'AST (SGOT)',        u:'IU/L',  d:0, ref:{lo:0,hi:40}},
-  {k:'alt',      p:'hep', n:'ALT (SGPT)',        u:'IU/L',  d:0, ref:{lo:0,hi:44}},
-  // ---- CBC ----
-  {k:'wbc',      p:'cbc', n:'WBC',               u:'K/µL',  d:1, ref:{lo:3.4,hi:10.8}},
-  {k:'rbc',      p:'cbc', n:'RBC',               u:'M/µL',  d:2, ref:{male:{lo:4.14,hi:5.80},female:{lo:3.77,hi:5.28}}},
-  {k:'hgb',      p:'cbc', n:'Hemoglobin',        u:'g/dL',  d:1, ref:{male:{lo:13.0,hi:17.7},female:{lo:11.1,hi:15.9}}},
-  {k:'hct',      p:'cbc', n:'Hematocrit',        u:'%',     d:1, ref:{male:{lo:37.5,hi:51.0},female:{lo:34.0,hi:46.6}}},
-  {k:'mcv',      p:'cbc', n:'MCV',               u:'fL',    d:0, ref:{lo:79,hi:97}},
-  {k:'mch',      p:'cbc', n:'MCH',               u:'pg',    d:1, ref:{lo:26.6,hi:33.0}},
-  {k:'mchc',     p:'cbc', n:'MCHC',              u:'g/dL',  d:1, ref:{lo:31.5,hi:35.7}},
-  {k:'rdw',      p:'cbc', n:'RDW',               u:'%',     d:1, ref:{lo:11.6,hi:15.4}},
-  {k:'plt',      p:'cbc', n:'Platelets',         u:'K/µL',  d:0, ref:{lo:150,hi:450}},
-  {k:'mpv',      p:'cbc', n:'MPV',               u:'fL',    d:1, ref:{lo:7.5,hi:12.5}},
-  // ---- Differential ----
-  {k:'neutA',    p:'diff',n:'Neutrophils, absolute', u:'K/µL', d:1, ref:{lo:1.4,hi:7.0}},
-  {k:'lymphA',   p:'diff',n:'Lymphocytes, absolute', u:'K/µL', d:1, ref:{lo:0.7,hi:3.1}},
-  {k:'monoA',    p:'diff',n:'Monocytes, absolute',   u:'K/µL', d:1, ref:{lo:0.1,hi:0.9}},
-  {k:'eosA',     p:'diff',n:'Eosinophils, absolute', u:'K/µL', d:1, ref:{lo:0.0,hi:0.4}},
-  {k:'basoA',    p:'diff',n:'Basophils, absolute',   u:'K/µL', d:1, ref:{lo:0.0,hi:0.2}},
-  {k:'neutP',    p:'diff',n:'Neutrophils',       u:'%',     d:0, ref:{lo:40,hi:74}},
-  {k:'lymphP',   p:'diff',n:'Lymphocytes',       u:'%',     d:0, ref:{lo:14,hi:46}},
-  {k:'monoP',    p:'diff',n:'Monocytes',         u:'%',     d:0, ref:{lo:4,hi:13}},
-  {k:'eosP',     p:'diff',n:'Eosinophils',       u:'%',     d:0, ref:{lo:0,hi:7}},
-  {k:'basoP',    p:'diff',n:'Basophils',         u:'%',     d:0, ref:{lo:0,hi:3}},
-  // ---- Lipids ----
-  {k:'chol',     p:'lipid',n:'Cholesterol, total',u:'mg/dL',d:0, ref:{lo:null,hi:200}, dlo:110},
-  {k:'ldl',      p:'lipid',n:'LDL cholesterol',  u:'mg/dL', d:0, ref:{lo:null,hi:100}, dlo:30},
-  {k:'hdl',      p:'lipid',n:'HDL cholesterol',  u:'mg/dL', d:0, ref:{male:{lo:40,hi:null},female:{lo:50,hi:null}}, dhi:100},
-  {k:'trig',     p:'lipid',n:'Triglycerides',    u:'mg/dL', d:0, ref:{lo:null,hi:150}, dlo:30},
-  {k:'nonhdl',   p:'lipid',n:'Non-HDL cholesterol',u:'mg/dL',d:0,ref:{lo:null,hi:130}, dlo:50},
-  {k:'cholhdl',  p:'lipid',n:'Chol/HDL ratio',   u:'',      d:1, ref:{lo:null,hi:5.0}, dlo:1},
-  {k:'apob',     p:'lipid',n:'Apolipoprotein B', u:'mg/dL', d:0, ref:{lo:null,hi:90},  dlo:30},
-  {k:'lpa',      p:'lipid',n:'Lipoprotein(a)',   u:'nmol/L',d:0, ref:{lo:null,hi:75},  dlo:0},
-  // ---- Thyroid ----
-  {k:'tsh',      p:'thy', n:'TSH',               u:'µIU/mL',d:2, ref:{lo:0.45,hi:4.50}},
-  {k:'ft4',      p:'thy', n:'Free T4',           u:'ng/dL', d:2, ref:{lo:0.82,hi:1.77}},
-  {k:'ft3',      p:'thy', n:'Free T3',           u:'pg/mL', d:1, ref:{lo:2.0,hi:4.4}},
-  {k:'tpo',      p:'thy', n:'TPO antibodies',    u:'IU/mL', d:0, ref:{lo:null,hi:9}, dlo:0},
-  // ---- Glycemic ----
-  {k:'a1c',      p:'gly', n:'Hemoglobin A1c',    u:'%',     d:1, ref:{lo:null,hi:5.7}, dlo:4.0},
-  {k:'insulin',  p:'gly', n:'Insulin, fasting',  u:'µIU/mL',d:1, ref:{lo:2.6,hi:24.9}},
-  // ---- Prostate ----
-  {k:'psa',      p:'pros',n:'PSA, total',        u:'ng/mL', d:2, ref:{lo:null,hi:4.0}, dlo:0,
-   note:'Common cutoff. Age-specific thresholds are lower for men under 60 — override if your lab uses one.'},
-  {k:'psafree',  p:'pros',n:'PSA, free',         u:'%',     d:0, ref:{lo:25,hi:null}, dhi:50},
-  // ---- Iron ----
-  {k:'iron',     p:'iron',n:'Iron, total',       u:'µg/dL', d:0, ref:{lo:38,hi:169}},
-  {k:'tibc',     p:'iron',n:'TIBC',              u:'µg/dL', d:0, ref:{lo:250,hi:450}},
-  {k:'ironsat',  p:'iron',n:'Iron saturation',   u:'%',     d:0, ref:{lo:15,hi:55}},
-  {k:'ferritin', p:'iron',n:'Ferritin',          u:'ng/mL', d:0, ref:{male:{lo:30,hi:400},female:{lo:15,hi:150}}},
-  // ---- Vitamins & minerals ----
-  {k:'vitd',     p:'vit', n:'Vitamin D, 25-OH',  u:'ng/mL', d:1, ref:{lo:30,hi:100}},
-  {k:'b12',      p:'vit', n:'Vitamin B12',       u:'pg/mL', d:0, ref:{lo:232,hi:1245}},
-  {k:'folate',   p:'vit', n:'Folate',            u:'ng/mL', d:1, ref:{lo:3.0,hi:null}, dhi:25},
-  {k:'mag',      p:'vit', n:'Magnesium',         u:'mg/dL', d:1, ref:{lo:1.6,hi:2.3}},
-  {k:'uric',     p:'vit', n:'Uric acid',         u:'mg/dL', d:1, ref:{male:{lo:3.8,hi:8.4},female:{lo:2.5,hi:7.1}}},
-  {k:'phos',     p:'vit', n:'Phosphorus',        u:'mg/dL', d:1, ref:{lo:2.5,hi:4.5}},
-  // ---- Inflammation & risk ----
-  {k:'hscrp',    p:'inf', n:'hs-CRP',            u:'mg/L',  d:2, ref:{lo:null,hi:3.0}, dlo:0},
-  {k:'homocys',  p:'inf', n:'Homocysteine',      u:'µmol/L',d:1, ref:{lo:null,hi:15},  dlo:4},
-  {k:'esr',      p:'inf', n:'ESR',               u:'mm/hr', d:0, ref:{lo:null,hi:20},  dlo:0},
-  // ---- Vitals ----
-  {k:'sbp',      p:'vitals',n:'Systolic BP',     u:'mmHg',  d:0, ref:{lo:90,hi:120}},
-  {k:'dbp',      p:'vitals',n:'Diastolic BP',    u:'mmHg',  d:0, ref:{lo:60,hi:80}},
-  {k:'hr',       p:'vitals',n:'Resting heart rate',u:'bpm', d:0, ref:{lo:60,hi:100}},
-  {k:'spo2',     p:'vitals',n:'SpO₂',            u:'%',     d:0, ref:{lo:95,hi:null}, dhi:100},
-  {k:'weight',   p:'vitals',n:'Weight',          u:'lb',    d:1, ref:null},
-  {k:'waist',    p:'vitals',n:'Waist',           u:'in',    d:1, ref:null}
+/* ---------------- Basic metabolic ---------------- */
+{k:'glucose',p:'bmp',n:'Glucose, fasting',u:'mg/dL',d:0,ref:{lo:70,hi:99},
+ def:'Blood sugar at the moment of the draw. A fasting value shows how well your body clears glucose overnight; it rises with carbohydrate load, acute illness, stress hormones, and steroids.'},
+{k:'bun',p:'bmp',n:'BUN',u:'mg/dL',d:0,ref:{lo:7,hi:20},
+ def:'Urea nitrogen, a protein waste product cleared by the kidneys. It rises with dehydration, high protein intake, and reduced filtration, so it is rarely read on its own.'},
+{k:'creat',p:'bmp',n:'Creatinine',u:'mg/dL',d:2,ref:{male:{lo:0.76,hi:1.27},female:{lo:0.57,hi:1.00}},
+ def:'A muscle breakdown product cleared almost entirely by the kidneys, which makes it the standard filtration marker. Muscle mass, hydration, red meat, and creatine supplements all shift it.'},
+{k:'bcratio',p:'bmp',n:'BUN/creatinine ratio',u:'',d:0,ref:{lo:9,hi:20},from:{deps:['bun','creat'],fn:(v)=>v.bun/v.creat},
+ def:'BUN divided by creatinine. It helps separate dehydration or bleeding, where the ratio climbs, from kidney tissue injury, where the ratio stays flat.'},
+{k:'egfr',p:'bmp',n:'eGFR',u:'mL/min/1.73m²',d:0,ref:{lo:60,hi:null},dhi:130,
+ def:'Estimated glomerular filtration rate — kidney filtering capacity calculated from creatinine, age, and sex. Higher is better, and it declines slowly with normal aging.'},
+{k:'sodium',p:'bmp',n:'Sodium',u:'mmol/L',d:0,ref:{lo:134,hi:144},
+ def:'The main extracellular electrolyte, held in a narrow band by kidney and hormone control. It tracks total body water more than dietary salt.'},
+{k:'potassium',p:'bmp',n:'Potassium',u:'mmol/L',d:1,ref:{lo:3.5,hi:5.2},
+ def:'Electrolyte central to nerve conduction and heart rhythm. Kidney function, diuretics, and ACE inhibitors move it; a slightly hemolyzed sample falsely raises it.'},
+{k:'chloride',p:'bmp',n:'Chloride',u:'mmol/L',d:0,ref:{lo:96,hi:106},
+ def:'An electrolyte that shifts with sodium and with acid-base balance. Its main use is calculating the anion gap.'},
+{k:'co2',p:'bmp',n:'CO₂ (bicarbonate)',u:'mmol/L',d:0,ref:{lo:20,hi:29},
+ def:'Bicarbonate, the blood\u2019s principal buffer. It reflects acid-base status and how the lungs and kidneys are compensating for each other.'},
+{k:'anion',p:'bmp',n:'Anion gap',u:'mmol/L',d:0,ref:{lo:8,hi:16},from:{deps:['sodium','chloride','co2'],fn:(v)=>v.sodium-v.chloride-v.co2},
+ def:'Sodium minus chloride and bicarbonate — the unmeasured ions left over. A widened gap suggests an acid is accumulating; a narrow one often reflects low albumin.'},
+{k:'calcium',p:'bmp',n:'Calcium',u:'mg/dL',d:1,ref:{lo:8.7,hi:10.2},
+ def:'Total blood calcium, tightly regulated by parathyroid hormone and vitamin D. About half is bound to albumin, so low albumin drags the total down without changing active calcium.'},
+/* ---------------- Liver ---------------- */
+{k:'protein',p:'hep',n:'Protein, total',u:'g/dL',d:1,ref:{lo:6.0,hi:8.5},
+ def:'Albumin plus all globulins. It reflects liver synthesis, nutrition, hydration, and immune activity together.'},
+{k:'albumin',p:'hep',n:'Albumin',u:'g/dL',d:1,ref:{lo:3.9,hi:4.9},
+ def:'The main protein made by the liver and the body\u2019s chief carrier molecule. It falls with liver disease, sustained inflammation, malnutrition, and protein loss through kidney or gut.'},
+{k:'globulin',p:'hep',n:'Globulin, total',u:'g/dL',d:1,ref:{lo:1.5,hi:4.5},from:{deps:['protein','albumin'],fn:(v)=>v.protein-v.albumin},
+ def:'Total protein minus albumin — mostly immunoglobulins and transport proteins. It rises with chronic inflammation and sustained immune activity.'},
+{k:'agratio',p:'hep',n:'A/G ratio',u:'',d:1,ref:{lo:1.2,hi:2.2},from:{deps:['albumin','globulin'],fn:(v)=>v.albumin/v.globulin},
+ def:'Albumin divided by globulin. A falling ratio usually means globulins are climbing rather than albumin dropping.'},
+{k:'bili',p:'hep',n:'Bilirubin, total',u:'mg/dL',d:1,ref:{lo:0.0,hi:1.2},
+ def:'A hemoglobin breakdown product processed by the liver. It rises with red cell turnover, obstructed bile flow, fasting, and Gilbert syndrome, a common and harmless variant.'},
+{k:'alp',p:'hep',n:'Alkaline phosphatase',u:'IU/L',d:0,ref:{lo:44,hi:121},
+ def:'An enzyme concentrated in bile ducts and bone. Because both sources raise it, an elevation is usually sorted out with GGT or a bone-specific fraction.'},
+{k:'ast',p:'hep',n:'AST (SGOT)',u:'IU/L',d:0,ref:{lo:0,hi:40},
+ def:'An enzyme present in liver, heart, and skeletal muscle. Hard exercise in the days before a draw raises it with nothing wrong in the liver.'},
+{k:'alt',p:'hep',n:'ALT (SGPT)',u:'IU/L',d:0,ref:{lo:0,hi:44},
+ def:'An enzyme largely specific to liver cells, and the more liver-specific of the two transaminases. Fatty liver, alcohol, and medications are the usual reasons it climbs.'},
+/* ---------------- CBC ---------------- */
+{k:'wbc',p:'cbc',n:'WBC',u:'K/µL',d:1,ref:{lo:3.4,hi:10.8},
+ def:'Total circulating white cells. It rises with bacterial infection, inflammation, and steroids, and falls with some viral infections and marrow suppression.'},
+{k:'rbc',p:'cbc',n:'RBC',u:'M/µL',d:2,ref:{male:{lo:4.14,hi:5.80},female:{lo:3.77,hi:5.28}},
+ def:'Red cell count. It is interpreted alongside hemoglobin and hematocrit rather than on its own.'},
+{k:'hgb',p:'cbc',n:'Hemoglobin',u:'g/dL',d:1,ref:{male:{lo:13.0,hi:17.7},female:{lo:11.1,hi:15.9}},
+ def:'The oxygen-carrying protein in red cells and the primary measure of anemia. Plasma volume changes move it, so hydration matters.'},
+{k:'hct',p:'cbc',n:'Hematocrit',u:'%',d:1,ref:{male:{lo:37.5,hi:51.0},female:{lo:34.0,hi:46.6}},
+ def:'The share of blood volume made up of red cells, normally about three times the hemoglobin. Dehydration raises it; fluid loading lowers it.'},
+{k:'mcv',p:'cbc',n:'MCV',u:'fL',d:0,ref:{lo:79,hi:97},
+ def:'Average red cell size, and the first thing looked at when hemoglobin is low. Small cells point toward iron deficiency or thalassemia trait, large cells toward B12, folate, or alcohol.'},
+{k:'mch',p:'cbc',n:'MCH',u:'pg',d:1,ref:{lo:26.6,hi:33.0},
+ def:'Average hemoglobin mass per red cell. It moves closely with MCV and rarely adds information beyond it.'},
+{k:'mchc',p:'cbc',n:'MCHC',u:'g/dL',d:1,ref:{lo:31.5,hi:35.7},
+ def:'Hemoglobin concentration within red cells. Unusually high values often signal a sample or instrument issue rather than a physiological one.'},
+{k:'rdw',p:'cbc',n:'RDW',u:'%',d:1,ref:{lo:11.6,hi:15.4},
+ def:'How much red cell size varies across the population of cells. It often rises before MCV moves when a deficiency is developing.'},
+{k:'plt',p:'cbc',n:'Platelets',u:'K/µL',d:0,ref:{lo:150,hi:450},
+ def:'Clotting cell count. It falls with marrow suppression, several medications, and spleen enlargement, and rises transiently with inflammation.'},
+{k:'mpv',p:'cbc',n:'MPV',u:'fL',d:1,ref:{lo:7.5,hi:12.5},
+ def:'Average platelet size. Larger platelets are younger, which suggests the marrow is producing actively.'},
+/* ---------------- Differential ---------------- */
+{k:'neutA',p:'diff',n:'Neutrophils, absolute',u:'K/µL',d:1,ref:{lo:1.4,hi:7.0},
+ def:'The first responders to bacterial infection and the largest white cell fraction. This absolute count is the number that matters clinically.'},
+{k:'lymphA',p:'diff',n:'Lymphocytes, absolute',u:'K/µL',d:1,ref:{lo:0.7,hi:3.1},
+ def:'T and B cells, the adaptive immune system. Their share rises during viral infection and falls with steroids and acute stress.'},
+{k:'monoA',p:'diff',n:'Monocytes, absolute',u:'K/µL',d:1,ref:{lo:0.1,hi:0.9},
+ def:'Cells that migrate into tissue and become macrophages. They rise in chronic inflammation and during recovery from infection.'},
+{k:'eosA',p:'diff',n:'Eosinophils, absolute',u:'K/µL',d:1,ref:{lo:0.0,hi:0.4},
+ def:'Cells tied to allergy, asthma, drug reactions, and parasitic infection.'},
+{k:'basoA',p:'diff',n:'Basophils, absolute',u:'K/µL',d:1,ref:{lo:0.0,hi:0.2},
+ def:'The smallest white cell fraction. It is seldom informative in isolation.'},
+{k:'neutP',p:'diff',n:'Neutrophils',u:'%',d:0,ref:{lo:40,hi:74},
+ def:'Neutrophils as a share of all white cells. Percentages shift whenever any other population changes, so the absolute count is the more reliable number.'},
+{k:'lymphP',p:'diff',n:'Lymphocytes',u:'%',d:0,ref:{lo:14,hi:46},
+ def:'Lymphocytes as a share of all white cells. Read alongside the absolute count rather than instead of it.'},
+{k:'monoP',p:'diff',n:'Monocytes',u:'%',d:0,ref:{lo:4,hi:13},
+ def:'Monocytes as a share of all white cells.'},
+{k:'eosP',p:'diff',n:'Eosinophils',u:'%',d:0,ref:{lo:0,hi:7},
+ def:'Eosinophils as a share of all white cells.'},
+{k:'basoP',p:'diff',n:'Basophils',u:'%',d:0,ref:{lo:0,hi:3},
+ def:'Basophils as a share of all white cells.'},
+/* ---------------- Lipids ---------------- */
+{k:'chol',p:'lipid',n:'Cholesterol, total',u:'mg/dL',d:0,ref:{lo:null,hi:200},dlo:110,
+ def:'Cholesterol summed across all lipoprotein particles. Useful as an overview, but weaker at predicting risk than LDL, non-HDL, or ApoB because it includes protective HDL.'},
+{k:'ldl',p:'lipid',n:'LDL cholesterol',u:'mg/dL',d:0,ref:{lo:null,hi:100},dlo:30,
+ def:'Cholesterol carried in low-density particles, the primary target in cardiovascular risk reduction. Most labs calculate rather than measure it, and the calculation degrades when triglycerides are high.'},
+{k:'hdl',p:'lipid',n:'HDL cholesterol',u:'mg/dL',d:0,ref:{male:{lo:40,hi:null},female:{lo:50,hi:null}},dhi:100,
+ def:'Cholesterol in high-density particles, associated with lower risk. Higher is generally better, though very high values have not been shown to add protection.'},
+{k:'trig',p:'lipid',n:'Triglycerides',u:'mg/dL',d:0,ref:{lo:null,hi:150},dlo:30,
+ def:'Circulating fat, and the lipid most sensitive to what you did the day before. Recent meals, alcohol, and carbohydrate intake all move it sharply, so fasting matters here more than for the others.'},
+{k:'vldl',p:'lipid',n:'VLDL cholesterol',u:'mg/dL',d:0,ref:{lo:5,hi:40},from:{deps:['trig'],fn:(v)=>v.trig/5},
+ def:'Cholesterol carried in very-low-density particles, the triglyceride-rich fraction. Labs almost always estimate it as triglycerides divided by five, which stops being valid above about 400 mg/dL.'},
+{k:'nonhdl',p:'lipid',n:'Non-HDL cholesterol',u:'mg/dL',d:0,ref:{lo:null,hi:130},dlo:50,from:{deps:['chol','hdl'],fn:(v)=>v.chol-v.hdl},
+ def:'Total cholesterol minus HDL — every atherogenic particle counted together. It stays reliable in a non-fasting sample, unlike calculated LDL.'},
+{k:'cholhdl',p:'lipid',n:'Chol/HDL ratio',u:'',d:1,ref:{lo:null,hi:5.0},dlo:1,from:{deps:['chol','hdl'],fn:(v)=>v.chol/v.hdl},
+ def:'Total cholesterol divided by HDL, a compact summary of the balance between atherogenic and protective particles.'},
+{k:'apob',p:'lipid',n:'Apolipoprotein B',u:'mg/dL',d:0,ref:{lo:null,hi:90},dlo:30,
+ def:'A direct count of atherogenic particles, since each carries exactly one ApoB molecule. It often outperforms LDL as a risk marker, particularly when triglycerides are high or LDL is low.'},
+{k:'lpa',p:'lipid',n:'Lipoprotein(a)',u:'nmol/L',d:0,ref:{lo:null,hi:75},dlo:0,
+ def:'A largely genetic lipoprotein that adds cardiovascular risk independent of LDL. Levels are set early and stay stable, so a single lifetime measurement is usually enough.'},
+/* ---------------- Thyroid ---------------- */
+{k:'tsh',p:'thy',n:'TSH',u:'µIU/mL',d:2,ref:{lo:0.45,hi:4.50},
+ def:'The pituitary\u2019s signal telling the thyroid to work, and the most sensitive early indicator of thyroid status. It moves opposite to thyroid hormone, so a high TSH suggests an underactive gland.'},
+{k:'ft4',p:'thy',n:'Free T4',u:'ng/dL',d:2,ref:{lo:0.82,hi:1.77},
+ def:'The unbound, available fraction of the main thyroid hormone. Paired with TSH, it separates thyroid problems from pituitary ones.'},
+{k:'ft3',p:'thy',n:'Free T3',u:'pg/mL',d:1,ref:{lo:2.0,hi:4.4},
+ def:'The unbound fraction of the more biologically active thyroid hormone, produced mostly by converting T4 inside tissues.'},
+{k:'t4',p:'thy',n:'T4, total',u:'µg/dL',d:1,ref:{lo:4.5,hi:12.0},
+ def:'Thyroxine including the portion bound to carrier proteins. Pregnancy and estrogen raise carrier proteins and therefore total T4 without changing thyroid function.'},
+{k:'t3',p:'thy',n:'T3, total',u:'ng/dL',d:0,ref:{lo:71,hi:180},
+ def:'Triiodothyronine including the bound portion. Like total T4, it moves with carrier protein levels.'},
+{k:'rt3',p:'thy',n:'Reverse T3',u:'ng/dL',d:1,ref:{lo:9.2,hi:24.1},
+ def:'An inactive T3 isomer made when the body diverts T4 away from activation, typically during illness, injury, or caloric restriction. Its clinical usefulness is debated.'},
+{k:'tpo',p:'thy',n:'TPO antibodies',u:'IU/mL',d:0,ref:{lo:null,hi:9},dlo:0,
+ def:'Antibodies against thyroid peroxidase, the marker of autoimmune thyroid disease. Whether they are present matters more than the exact number, and the number does not track disease severity.'},
+{k:'tgab',p:'thy',n:'Thyroglobulin antibodies',u:'IU/mL',d:0,ref:{lo:null,hi:1},dlo:0,
+ def:'Antibodies against thyroglobulin, usually ordered alongside TPO antibodies to look for autoimmune thyroid disease.'},
+/* ---------------- Glycemic ---------------- */
+{k:'a1c',p:'gly',n:'Hemoglobin A1c',u:'%',d:1,ref:{lo:null,hi:5.7},dlo:4.0,
+ def:'The share of hemoglobin that has become glycated, which reflects average glucose over roughly the previous three months, weighted toward the last few weeks. Anemia and any condition shortening red cell lifespan distort it.'},
+{k:'eag',p:'gly',n:'Estimated average glucose',u:'mg/dL',d:0,ref:{lo:null,hi:117},dlo:70,from:{deps:['a1c'],fn:(v)=>28.7*v.a1c-46.7},
+ def:'A1c translated into the units a glucose meter reports. It carries no information beyond A1c itself but is easier to compare against day-to-day readings.'},
+{k:'insulin',p:'gly',n:'Insulin, fasting',u:'µIU/mL',d:1,ref:{lo:2.6,hi:24.9},
+ def:'Fasting insulin. An elevated value alongside normal glucose suggests the body is working harder than it used to in order to hold glucose steady.'},
+/* ---------------- Prostate ---------------- */
+{k:'psa',p:'pros',n:'PSA, total',u:'ng/mL',d:2,ref:{lo:null,hi:4.0},dlo:0,
+ def:'A protein made by prostate tissue, benign and malignant alike. It rises with prostate volume, inflammation, recent ejaculation, and cycling, so the trend across several draws carries far more information than any single value.',
+ note:'The 4.0 cutoff is the common default. Age-specific thresholds are lower under 60 — override this if your lab uses one.'},
+{k:'psafree',p:'pros',n:'PSA, free',u:'%',d:0,ref:{lo:25,hi:null},dhi:50,
+ def:'The share of PSA circulating unbound to proteins. When total PSA sits in the borderline range, a lower free fraction shifts probability toward cancer and a higher one away from it.'},
+/* ---------------- Iron ---------------- */
+{k:'iron',p:'iron',n:'Iron, total',u:'µg/dL',d:0,ref:{lo:38,hi:169},
+ def:'Serum iron at the moment of the draw. It swings widely through the day and jumps after a supplement dose, so it is weak evidence on its own.'},
+{k:'tibc',p:'iron',n:'TIBC',u:'µg/dL',d:0,ref:{lo:250,hi:450},
+ def:'The blood\u2019s total capacity to bind iron, essentially a proxy for transferrin. It rises when iron stores run low.'},
+{k:'ironsat',p:'iron',n:'Iron saturation',u:'%',d:0,ref:{lo:15,hi:55},from:{deps:['iron','tibc'],fn:(v)=>v.iron/v.tibc*100},
+ def:'Iron divided by TIBC — the share of carrying capacity actually in use. More stable than serum iron alone, and the main screen for iron overload.'},
+{k:'ferritin',p:'iron',n:'Ferritin',u:'ng/mL',d:0,ref:{male:{lo:30,hi:400},female:{lo:15,hi:150}},
+ def:'The iron storage protein, and the best single measure of iron reserves. It is also an acute-phase reactant, so infection or inflammation inflates it and can mask depleted stores.'},
+/* ---------------- Vitamins & minerals ---------------- */
+{k:'vitd',p:'vit',n:'Vitamin D, 25-OH',u:'ng/mL',d:1,ref:{lo:30,hi:100},
+ def:'The storage form of vitamin D and the standard measure of status. It follows sun exposure and supplementation with a lag of several weeks, and drifts down through winter at northern latitudes.'},
+{k:'b12',p:'vit',n:'Vitamin B12',u:'pg/mL',d:0,ref:{lo:232,hi:1245},
+ def:'Needed for red cell production and nerve maintenance. Metformin, reduced stomach acid, and plant-only diets lower it; serum values can look adequate while tissue stores are not.'},
+{k:'folate',p:'vit',n:'Folate',u:'ng/mL',d:1,ref:{lo:3.0,hi:null},dhi:25,
+ def:'Works with B12 in DNA synthesis. Serum folate responds within days to what you have eaten recently, so it reflects intake more than stores.'},
+{k:'mag',p:'vit',n:'Magnesium',u:'mg/dL',d:1,ref:{lo:1.6,hi:2.3},
+ def:'Serum magnesium represents roughly one percent of total body stores, so it can sit in range while tissue levels are depleted.'},
+{k:'uric',p:'vit',n:'Uric acid',u:'mg/dL',d:1,ref:{male:{lo:3.8,hi:8.4},female:{lo:2.5,hi:7.1}},
+ def:'A purine breakdown product that can crystallize in joints at high concentrations. Alcohol, fructose, diuretics, and reduced kidney clearance push it up.'},
+{k:'phos',p:'vit',n:'Phosphorus',u:'mg/dL',d:1,ref:{lo:2.5,hi:4.5},
+ def:'Regulated together with calcium by parathyroid hormone, vitamin D, and the kidneys.'},
+/* ---------------- Inflammation & risk ---------------- */
+{k:'hscrp',p:'inf',n:'hs-CRP',u:'mg/L',d:2,ref:{lo:null,hi:3.0},dlo:0,
+ def:'A high-sensitivity measure of general inflammation used for cardiovascular risk stratification. Any recent infection, injury, or hard training session invalidates the reading, so it is worth repeating before acting on it.'},
+{k:'homocys',p:'inf',n:'Homocysteine',u:'µmol/L',d:1,ref:{lo:null,hi:15},dlo:4,
+ def:'An amino acid that accumulates when B12, B6, or folate are insufficient, or when kidney clearance drops. Elevations track vascular risk, though lowering it has not clearly reduced events.'},
+{k:'esr',p:'inf',n:'ESR',u:'mm/hr',d:0,ref:{lo:null,hi:20},dlo:0,
+ def:'How fast red cells settle in a tube — a slow, nonspecific indicator of inflammation. It rises and falls over weeks, lagging well behind CRP.'},
+/* ---------------- Vitals ---------------- */
+{k:'sbp',p:'vitals',n:'Systolic BP',u:'mmHg',d:0,ref:{lo:90,hi:120},
+ def:'Arterial pressure during the heartbeat. Single readings vary by ten points or more, so what matters is the average of several taken across different days under the same conditions.'},
+{k:'dbp',p:'vitals',n:'Diastolic BP',u:'mmHg',d:0,ref:{lo:60,hi:80},
+ def:'Pressure between beats, reflecting resting arterial tone. It tends to matter more than systolic before roughly age 50 and less after.'},
+{k:'hr',p:'vitals',n:'Resting heart rate',u:'bpm',d:0,ref:{lo:60,hi:100},
+ def:'Heart rate after sitting quietly for several minutes. It falls with aerobic fitness and rises with illness, dehydration, poor sleep, alcohol, and stimulants.'},
+{k:'spo2',p:'vitals',n:'SpO₂',u:'%',d:0,ref:{lo:95,hi:null},dhi:100,
+ def:'The share of hemoglobin carrying oxygen, measured by pulse oximeter. Cold hands, nail polish, and poor probe placement produce falsely low readings.'},
+{k:'weight',p:'vitals',n:'Weight',u:'lb',d:1,ref:null,
+ def:'Body weight, best tracked under consistent conditions — same time of day, same state of hydration — since day-to-day swings are mostly water.'},
+{k:'waist',p:'vitals',n:'Waist',u:'in',d:1,ref:null,
+ def:'Circumference measured at the navel. It proxies visceral fat, which carries metabolic risk that body weight alone misses.'}
 ];
 
-// Order sets offered on the entry form. A draw can mix any of them.
 const ORDERS = [
-  {key:'bmp',   label:'Basic metabolic panel',      panels:['bmp']},
-  {key:'cmp',   label:'Comprehensive metabolic panel', panels:['bmp','hep']},
-  {key:'cbcd',  label:'CBC with differential',      panels:['cbc','diff']},
-  {key:'cbc',   label:'CBC without differential',   panels:['cbc']},
-  {key:'lipid', label:'Lipid panel',                panels:['lipid']},
-  {key:'thy',   label:'Thyroid panel',              panels:['thy']},
-  {key:'gly',   label:'Glycemic',                   panels:['gly']},
-  {key:'pros',  label:'Prostate',                   panels:['pros']},
-  {key:'iron',  label:'Iron studies',               panels:['iron']},
-  {key:'vit',   label:'Vitamins & minerals',        panels:['vit']},
-  {key:'inf',   label:'Inflammation & risk',        panels:['inf']},
-  {key:'vitals',label:'Vitals',                     panels:['vitals']}
+  {key:'bmp',   label:'Basic metabolic panel',        panels:['bmp']},
+  {key:'cmp',   label:'Comprehensive metabolic panel',panels:['bmp','hep']},
+  {key:'cbcd',  label:'CBC with differential',        panels:['cbc','diff']},
+  {key:'cbc',   label:'CBC without differential',     panels:['cbc']},
+  {key:'lipid', label:'Lipid panel',                  panels:['lipid']},
+  {key:'thy',   label:'Thyroid panel',                panels:['thy']},
+  {key:'gly',   label:'Glycemic',                     panels:['gly']},
+  {key:'pros',  label:'Prostate',                     panels:['pros']},
+  {key:'iron',  label:'Iron studies',                 panels:['iron']},
+  {key:'vit',   label:'Vitamins & minerals',          panels:['vit']},
+  {key:'inf',   label:'Inflammation & risk',          panels:['inf']},
+  {key:'vitals',label:'Vitals',                       panels:['vitals']}
 ];
 
 const BY_KEY = Object.fromEntries(A.map(a => [a.k, a]));
 const PANEL_NAME = Object.fromEntries(PANELS.map(p => [p.key, p.name]));
 </script>
-
 <script>
 /* ============================ state ============================ */
 const KEY = 'labrecord.v1';
 let S = load();
-let view = 'latest';
-let filterPanel = 'all';
-let filterText = '';
+let view = 'dash';
+let filterPanel = 'all', filterText = '';
 let editingId = null;
 let entryPanels = new Set();
+let analysis = {text:'', at:'', busy:false, error:''};
+let passphrase = sessionStorage.getItem('labrecord.pass') || '';
 
+function blank(){ return {schema:2, profile:{sex:'male'}, overrides:{}, draws:[], deleted:[], sync:{gistId:'', token:''}}; }
 function load(){
   try{
     const raw = localStorage.getItem(KEY);
     if(raw){
       const s = JSON.parse(raw);
       s.draws ||= []; s.overrides ||= {}; s.profile ||= {sex:'male'};
+      s.deleted ||= []; s.sync ||= {gistId:'', token:''};
+      s.draws.forEach(d => { d.mtime ||= 0; });
       return s;
     }
   }catch(e){ console.warn('Could not read saved data', e); }
-  return {schema:1, profile:{sex:'male'}, overrides:{}, draws:[]};
+  return blank();
 }
 function save(){
   try{ localStorage.setItem(KEY, JSON.stringify(S)); }
-  catch(e){ toast('Storage is full — export a backup and remove old draws.'); }
+  catch(e){ toast('Browser storage is full. Export a backup, then remove older draws.'); }
 }
 
 /* ============================ helpers ============================ */
-const $ = (s,r=document) => r.querySelector(s);
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 function toast(msg){
   const t = $('#toast'); t.textContent = msg; t.classList.add('show');
-  clearTimeout(t._t); t._t = setTimeout(()=>t.classList.remove('show'), 2400);
+  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), 3200);
 }
 function fmt(v, dec){
   if(v === null || v === undefined || Number.isNaN(v)) return '—';
   return Number(v).toFixed(dec);
 }
-function fmtDate(iso){
-  const [y,m,d] = iso.split('-');
-  return `${y}-${m}-${d}`;
-}
 function longDate(iso){
-  const dt = new Date(iso + 'T12:00:00');
-  return dt.toLocaleDateString(undefined, {year:'numeric', month:'long', day:'numeric'});
+  return new Date(iso + 'T12:00:00').toLocaleDateString(undefined, {year:'numeric', month:'long', day:'numeric'});
 }
-function daysBetween(a, b){
-  return Math.round((new Date(b+'T12:00:00') - new Date(a+'T12:00:00')) / 86400000);
+function daysBetween(a, b){ return Math.round((new Date(b+'T12:00:00') - new Date(a+'T12:00:00')) / 86400000); }
+function daysAgo(iso){ return Math.round((Date.now() - new Date(iso+'T12:00:00')) / 86400000); }
+function parseVal(raw){
+  if(raw === null || raw === undefined) return null;
+  const s = String(raw).replace(/[<>=\s,]/g, '');
+  if(s === '') return null;
+  const n = Number(s);
+  return Number.isFinite(n) ? n : null;
 }
 
-/* Reference interval for an analyte, applying sex and any user override. */
+/* Reference interval, applying sex and any user override. */
 function refFor(a){
   if(S.overrides[a.k]) return {...S.overrides[a.k], custom:true};
   if(!a.ref) return null;
-  if(a.ref.male || a.ref.female) return {...(a.ref[S.profile.sex] || a.ref.male), sexed:true};
+  if(a.ref.male || a.ref.female) return {...(a.ref[S.profile.sex] || a.ref.male)};
   return {...a.ref};
 }
 function refText(a){
   const r = refFor(a);
   if(!r) return 'no interval';
-  if(r.lo !== null && r.hi !== null) return `${fmt(r.lo,a.d)}–${fmt(r.hi,a.d)}`;
-  if(r.hi !== null) return `< ${fmt(r.hi,a.d)}`;
+  if(r.lo !== null && r.lo !== undefined && r.hi !== null && r.hi !== undefined) return `${fmt(r.lo,a.d)}–${fmt(r.hi,a.d)}`;
+  if(r.hi !== null && r.hi !== undefined) return `< ${fmt(r.hi,a.d)}`;
   return `> ${fmt(r.lo,a.d)}`;
 }
 function status(v, r){
@@ -436,109 +527,411 @@ function status(v, r){
   if(r.lo !== null && r.lo !== undefined && v < r.lo) return 'low';
   return 'in';
 }
-/* Display bounds for the lane, so an open-ended interval still renders. */
+/* Width of the interval, used to express changes in interval-widths. */
+function refSpan(a){
+  const r = refFor(a);
+  if(!r) return null;
+  if(r.lo !== null && r.lo !== undefined && r.hi !== null && r.hi !== undefined) return r.hi - r.lo;
+  const b = (r.hi !== null && r.hi !== undefined) ? r.hi : r.lo;
+  return Math.abs(b) || null;
+}
 function laneDomain(a, r){
   if(!r) return null;
-  let lo = r.lo, hi = r.hi;
-  if(lo !== null && hi !== null){
+  const lo = r.lo, hi = r.hi;
+  const hasLo = lo !== null && lo !== undefined, hasHi = hi !== null && hi !== undefined;
+  if(hasLo && hasHi){
     const span = (hi - lo) || Math.abs(hi) * 0.2 || 1;
     return [lo - span*0.55, hi + span*0.55];
   }
-  if(hi !== null) return [a.dlo !== undefined ? a.dlo : 0, hi * 1.55];
+  if(hasHi) return [a.dlo !== undefined ? a.dlo : 0, hi * 1.55];
   return [Math.max(0, lo * 0.55), a.dhi !== undefined ? a.dhi : lo * 1.85];
 }
 
-const sortedDraws = () => [...S.draws].sort((x,y)=> x.date < y.date ? 1 : -1); // newest first
+const sortedDraws = () => [...S.draws].sort((x,y) => x.date < y.date ? 1 : -1);
 const seriesFor = k => S.draws
   .filter(dw => typeof dw.values[k] === 'number')
   .map(dw => ({date: dw.date, v: dw.values[k]}))
-  .sort((x,y)=> x.date < y.date ? -1 : 1); // oldest first
-const trackedKeys = () => {
+  .sort((x,y) => x.date < y.date ? -1 : 1);
+function trackedKeys(){
   const s = new Set();
   S.draws.forEach(dw => Object.keys(dw.values).forEach(k => { if(BY_KEY[k]) s.add(k); }));
   return A.filter(a => s.has(a.k));
-};
+}
 
-/* ============================ lane marker ============================ */
+/* Least-squares slope in units per year. */
+function slopePerYear(pts){
+  if(pts.length < 3) return null;
+  const t = pts.map(p => new Date(p.date+'T12:00:00').getTime() / 31557600000);
+  const y = pts.map(p => p.v);
+  const n = t.length, mt = t.reduce((a,b)=>a+b,0)/n, my = y.reduce((a,b)=>a+b,0)/n;
+  let num = 0, den = 0;
+  for(let i=0;i<n;i++){ num += (t[i]-mt)*(y[i]-my); den += (t[i]-mt)**2; }
+  if(den === 0) return null;
+  const m = num/den;
+  const ssTot = y.reduce((a,v)=>a+(v-my)**2, 0);
+  const ssRes = y.reduce((a,v,i)=>a+(v-(my+m*(t[i]-mt)))**2, 0);
+  return {m, r2: ssTot ? 1 - ssRes/ssTot : 0};
+}
+
+/* ============================ definitions ============================ */
+function defHTML(a){
+  return `${esc(a.def)}${a.note ? ` <em>${esc(a.note)}</em>` : ''}`;
+}
+
+/* ============================ lane + charts ============================ */
 function laneHTML(a, v){
   const r = refFor(a), dom = laneDomain(a, r);
-  if(!dom || v === null || v === undefined) return `<div class="lane-wrap"><span class="lane-none">—</span></div>`;
+  if(!dom || v === null || v === undefined) return `<div class="lane-wrap"><span class="lane-none">no interval</span></div>`;
   const [d0, d1] = dom, w = d1 - d0;
   const pct = x => Math.max(0, Math.min(100, ((x - d0) / w) * 100));
-  const bLo = r.lo !== null ? pct(r.lo) : 0;
-  const bHi = r.hi !== null ? pct(r.hi) : 100;
+  const bLo = (r.lo !== null && r.lo !== undefined) ? pct(r.lo) : 0;
+  const bHi = (r.hi !== null && r.hi !== undefined) ? pct(r.hi) : 100;
   const st = status(v, r);
-  const pos = pct(v);
-  return `<div class="lane-wrap" title="${esc(refText(a))}">
+  return `<div class="lane-wrap" title="reference ${esc(refText(a))}">
     <span class="lane-track"></span>
     <span class="lane-band" style="left:${bLo}%;width:${Math.max(0.5, bHi-bLo)}%"></span>
-    <span class="lane-tick ${st!=='in'?'out':''}" style="left:${pos}%"></span>
+    <span class="lane-tick ${st!=='in'?'out':''}" style="left:${pct(v)}%"></span>
   </div>`;
 }
 
-/* ============================ trend chart ============================ */
-function trendSVG(a, pts){
-  const W = 300, H = 108, L = 36, R = 8, T = 8, B = 18;
+function chartSVG(a, pts, compact){
+  const W = 300, H = compact ? 54 : 108;
+  const L = compact ? 4 : 36, R = compact ? 4 : 8, T = compact ? 5 : 8, B = compact ? 5 : 18;
   const iw = W - L - R, ih = H - T - B;
   const r = refFor(a);
 
-  const vals = pts.map(p => p.v);
-  const cands = [...vals];
-  if(r){ if(r.lo !== null && r.lo !== undefined) cands.push(r.lo); if(r.hi !== null && r.hi !== undefined) cands.push(r.hi); }
+  const cands = pts.map(p => p.v);
+  if(r){
+    if(r.lo !== null && r.lo !== undefined) cands.push(r.lo);
+    if(r.hi !== null && r.hi !== undefined) cands.push(r.hi);
+  }
   let yMin = Math.min(...cands), yMax = Math.max(...cands);
-  if(yMin === yMax){ const pad = Math.abs(yMin) * 0.1 || 1; yMin -= pad; yMax += pad; }
-  const pad = (yMax - yMin) * 0.12;
-  yMin -= pad; yMax += pad;
+  if(yMin === yMax){ const p = Math.abs(yMin) * 0.1 || 1; yMin -= p; yMax += p; }
+  const pad = (yMax - yMin) * 0.12; yMin -= pad; yMax += pad;
   const Y = v => T + ih - ((v - yMin) / (yMax - yMin)) * ih;
 
-  const times = pts.map(p => new Date(p.date + 'T12:00:00').getTime());
+  const times = pts.map(p => new Date(p.date+'T12:00:00').getTime());
   const t0 = Math.min(...times), t1 = Math.max(...times);
   const X = t => (t1 === t0) ? L + iw/2 : L + ((t - t0) / (t1 - t0)) * iw;
 
   let band = '';
   if(r){
-    const top = Y(r.hi !== null && r.hi !== undefined ? Math.min(r.hi, yMax) : yMax);
-    const bot = Y(r.lo !== null && r.lo !== undefined ? Math.max(r.lo, yMin) : yMin);
-    band = `<rect class="band" x="${L}" y="${top}" width="${iw}" height="${Math.max(1, bot-top)}"/>`;
+    const top = Y((r.hi !== null && r.hi !== undefined) ? Math.min(r.hi, yMax) : yMax);
+    const bot = Y((r.lo !== null && r.lo !== undefined) ? Math.max(r.lo, yMin) : yMin);
+    band = `<rect class="band" x="${L}" y="${top.toFixed(1)}" width="${iw}" height="${Math.max(1, bot-top).toFixed(1)}"/>`;
   }
-  const d = pts.map((p,i) => `${i?'L':'M'}${X(times[i]).toFixed(1)},${Y(p.v).toFixed(1)}`).join(' ');
-  const len = pts.length > 1 ? iw * 1.6 : 0;
-  const line = pts.length > 1 ? `<path class="line" style="--len:${len.toFixed(0)}" d="${d}"/>` : '';
-
+  const dpath = pts.map((p,i) => `${i?'L':'M'}${X(times[i]).toFixed(1)},${Y(p.v).toFixed(1)}`).join(' ');
+  const len = iw * 1.6;
+  const line = pts.length > 1 ? `<path class="line" style="--len:${len.toFixed(0)}" d="${dpath}"/>` : '';
+  const rad = compact ? 2.4 : 3;
   const dots = pts.map((p,i) => {
     const st = status(p.v, r);
-    return `<circle class="dot ${st!=='in'?'out':''}" cx="${X(times[i]).toFixed(1)}" cy="${Y(p.v).toFixed(1)}" r="3">
-      <title>${esc(fmtDate(p.date))} · ${fmt(p.v, a.d)} ${esc(a.u)}${st!=='in' ? ' · '+st : ''}</title>
-    </circle>`;
+    return `<circle class="dot ${st!=='in'?'out':''}" cx="${X(times[i]).toFixed(1)}" cy="${Y(p.v).toFixed(1)}" r="${rad}">
+      <title>${esc(p.date)} · ${fmt(p.v, a.d)} ${esc(a.u)}${st!=='in' ? ' · '+st : ''}</title></circle>`;
   }).join('');
 
-  const ax = `<line class="axis" x1="${L}" y1="${T+ih}" x2="${W-R}" y2="${T+ih}"/>`;
-  const yl = `<text class="tlabel" x="${L-5}" y="${T+4}" text-anchor="end">${fmt(yMax, a.d)}</text>
-              <text class="tlabel" x="${L-5}" y="${T+ih}" text-anchor="end">${fmt(yMin, a.d)}</text>`;
+  if(compact){
+    return `<svg class="spark" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(a.n)} trend, ${pts.length} points">
+      ${band}${line}${dots}</svg>`;
+  }
   const short = iso => iso.slice(2,7);
   const xl = pts.length > 1
     ? `<text class="tlabel" x="${L}" y="${H-5}">${short(pts[0].date)}</text>
        <text class="tlabel" x="${W-R}" y="${H-5}" text-anchor="end">${short(pts[pts.length-1].date)}</text>`
     : `<text class="tlabel" x="${L+iw/2}" y="${H-5}" text-anchor="middle">${short(pts[0].date)}</text>`;
-
   return `<svg class="trend" viewBox="0 0 ${W} ${H}" role="img"
     aria-label="${esc(a.n)} over time, ${pts.length} result${pts.length>1?'s':''}">
-    ${band}${ax}${yl}${line}${dots}${xl}</svg>`;
+    ${band}<line class="axis" x1="${L}" y1="${T+ih}" x2="${W-R}" y2="${T+ih}"/>
+    <text class="tlabel" x="${L-5}" y="${T+4}" text-anchor="end">${fmt(yMax,a.d)}</text>
+    <text class="tlabel" x="${L-5}" y="${T+ih}" text-anchor="end">${fmt(yMin,a.d)}</text>
+    ${line}${dots}${xl}</svg>`;
 }
 
-/* ============================ views ============================ */
-function renderMasthead(){
-  const n = S.draws.length;
-  if(!n){ $('#mastheadMeta').textContent = 'no results yet'; return; }
-  const ds = sortedDraws();
-  $('#mastheadMeta').textContent = `${n} draw${n>1?'s':''} · ${ds[n-1].date} to ${ds[0].date}`;
+/* ============================ what to watch ============================ */
+/* Every item the dashboard shows is derived here, so the reasoning stays in
+   one place and the Claude prompt can be built from the same objects. */
+function assess(){
+  const out = [];
+  const latestDraw = sortedDraws()[0];
+  trackedKeys().forEach(a => {
+    const pts = seriesFor(a.k);
+    if(!pts.length) return;
+    const r = refFor(a), span = refSpan(a);
+    const last = pts[pts.length-1], prev = pts[pts.length-2] || null;
+    const st = status(last.v, r);
+    const prevSt = prev ? status(prev.v, r) : null;
+    const reg = slopePerYear(pts);
+    const it = {
+      a, pts, r, span, last, prev, st, prevSt,
+      n: pts.length,
+      changed: prev ? (st !== prevSt) : false,
+      delta: prev ? last.v - prev.v : null,
+      slope: reg ? reg.m : null,
+      r2: reg ? reg.r2 : null,
+      stale: daysAgo(last.date) > 400,
+      inLatest: !!(latestDraw && typeof latestDraw.values[a.k] === 'number'),
+      excess: 0, headroom: null, toward: null, score: 0, bucket: null, msg: ''
+    };
+    /* how far outside, in interval-widths */
+    if(st !== 'in' && span){
+      const bound = st === 'high' ? r.hi : r.lo;
+      it.excess = Math.abs(last.v - bound) / span;
+    }
+    /* distance to the nearer bound, in interval-widths, and which way it moves */
+    if(st === 'in' && span && r){
+      const dHi = (r.hi !== null && r.hi !== undefined) ? (r.hi - last.v) / span : Infinity;
+      const dLo = (r.lo !== null && r.lo !== undefined) ? (last.v - r.lo) / span : Infinity;
+      it.headroom = Math.min(dHi, dLo);
+      it.toward = dHi < dLo ? 'high' : 'low';
+    }
+    out.push(it);
+  });
+
+  /* bucket assignment, most consequential first */
+  out.forEach(it => {
+    const dir = it.slope === null ? 0 : Math.sign(it.slope);
+    const persistent = it.n >= 3 && it.r2 !== null && it.r2 >= 0.6;
+    const perYearSpan = (it.slope !== null && it.span) ? it.slope / it.span : null;
+    /* rate relative to the values themselves, so a PSA that doubles from a low
+       base outranks a sodium that drifts a point inside a wide interval */
+    const mean = it.pts.reduce((a,p)=>a+Math.abs(p.v),0) / it.n;
+    const relRate = (it.slope !== null && mean) ? it.slope / mean : null;
+    const first = it.pts[0], years = daysBetween(first.date, it.last.date) / 365.25;
+    const fold = (first.v && Math.sign(first.v) === Math.sign(it.last.v)) ? it.last.v / first.v : null;
+    it.relRate = relRate;
+
+    if(it.st !== 'in'){
+      it.bucket = 'out';
+      it.score = 100 + it.excess * 10 + (it.changed ? 5 : 0);
+      const bound = it.st === 'high' ? 'above' : 'below';
+      it.msg = `<b>${it.excess ? (it.excess < 0.15 ? 'Just ' : '') : ''}${bound} the interval</b> by ${fmt(Math.abs(it.last.v - (it.st==='high'?it.r.hi:it.r.lo)), it.a.d)} ${it.a.u}.` +
+        (it.changed ? ' First draw outside it.' : it.prev ? ` Also outside last time (${fmt(it.prev.v, it.a.d)}).` : '');
+    }else if(it.changed && it.prevSt !== 'in'){
+      it.bucket = 'back';
+      it.score = 70 - (it.headroom ?? 0) * 10;
+      it.msg = `<b>Back inside the interval</b>, from ${fmt(it.prev.v, it.a.d)} to ${fmt(it.last.v, it.a.d)} ${it.a.u}.`;
+    }else if(persistent && it.headroom !== null && it.headroom < 0.4 && dir !== 0 &&
+             ((it.toward === 'high' && dir > 0) || (it.toward === 'low' && dir < 0))){
+      it.bucket = 'near';
+      const bound = it.toward === 'high' ? it.r.hi : it.r.lo;
+      const yrs = Math.abs((bound - it.last.v) / it.slope);
+      it.score = 50 + (0.4 - it.headroom) * 30 + (yrs < 3 ? (3 - yrs) * 4 : 0);
+      it.msg = `In range but <b>moving toward the ${it.toward === 'high' ? 'upper' : 'lower'} limit</b> at about ` +
+        `${fmt(Math.abs(it.slope), it.a.d + 1)} ${it.a.u} per year across ${it.n} draws.` +
+        (yrs < 12 ? ` At that rate it reaches ${fmt(bound, it.a.d)} in roughly ${yrs < 1 ? 'under a year' : Math.round(yrs) + ' year' + (Math.round(yrs)===1?'':'s')}.` : '');
+    }else if(persistent && relRate !== null && Math.abs(relRate) >= 0.12){
+      it.bucket = 'fast';
+      it.score = 45 + Math.min(20, Math.abs(relRate) * 40);
+      const foldTxt = (fold && years >= 0.75 && (fold >= 1.4 || fold <= 0.7))
+        ? ` — ${fmt(fold, 1)}× over ${fmt(years, 1)} years` : '';
+      it.msg = `<b>${it.slope > 0 ? 'Rising' : 'Falling'} about ${Math.round(Math.abs(relRate)*100)}% a year</b>` +
+        `${foldTxt}, from ${fmt(first.v, it.a.d)} to ${fmt(it.last.v, it.a.d)} ${it.a.u} across ${it.n} draws. Still inside the interval.`;
+    }else if(persistent && ((perYearSpan !== null && Math.abs(perYearSpan) > 0.08) || (relRate !== null && Math.abs(relRate) > 0.06))){
+      it.bucket = 'moving';
+      it.score = 30 + Math.min(15, Math.abs(perYearSpan || 0) * 20);
+      it.msg = `Drifting ${it.slope > 0 ? 'up' : 'down'} — about ${fmt(Math.abs(it.slope), it.a.d + 1)} ${it.a.u} per year over ${it.n} draws — with plenty of room left.`;
+    }else if(it.stale){
+      it.bucket = 'stale';
+      it.score = 20;
+      const mo = Math.round(daysAgo(it.last.date) / 30);
+      it.msg = `Last measured ${mo} months ago.`;
+    }else{
+      it.bucket = 'steady';
+      it.score = 0;
+      it.msg = 'Stable.';
+    }
+  });
+  return out.sort((x,y) => y.score - x.score);
+}
+</script>
+<script>
+/* ============================ dashboard ============================ */
+const BUCKETS = [
+  {key:'out',    title:'Outside the reference interval', sev:'out',
+   why:'Values above or below the interval in use, ordered by how far out they sit relative to the width of that interval.'},
+  {key:'near',   title:'Moving toward a limit', sev:'near',
+   why:'Still in range, but trending consistently in one direction across three or more draws. Projections assume the current rate holds, which it frequently does not.'},
+  {key:'fast',   title:'Changing fastest', sev:'near',
+   why:'Consistent movement that is large relative to the values themselves rather than to the width of the interval. Something can be well inside its range and still have doubled.'},
+  {key:'back',   title:'Returned to the interval', sev:'ok',
+   why:'Outside the interval on the previous draw, inside it now.'},
+  {key:'moving', title:'Slow drift', sev:'ok',
+   why:'A consistent direction of travel, slow in both absolute and relative terms. Noted rather than flagged.'},
+  {key:'stale',  title:'Not measured in over a year', sev:'',
+   why:'Tracked previously but absent from recent draws.'}
+];
+
+function renderDash(){
+  const el = $('#view-dash');
+  if(!S.draws.length){
+    el.innerHTML = `<div class="empty"><p>Nothing recorded yet. Enter your most recent blood work and the dashboard will start sorting what is worth watching.</p>
+      <button class="btn" data-goto="add">Add result</button></div>`;
+    return;
+  }
+  const items = assess();
+  const ds = sortedDraws(), latest = ds[0];
+  const nOut = items.filter(i => i.st !== 'in').length;
+  const nNear = items.filter(i => i.bucket === 'near').length;
+
+  let html = `<div class="specimen">
+    <span class="eyebrow">Most recent draw${latest.lab ? ' · ' + esc(latest.lab) : ''}</span>
+    <h2 class="specimen-date">${longDate(latest.date)}</h2>
+    <div class="specimen-meta">
+      <div class="stat"><span class="v">${items.length}</span><span class="k eyebrow">analytes tracked</span></div>
+      <div class="stat"><span class="v ${nOut?'flag':''}">${nOut}</span><span class="k eyebrow">outside interval</span></div>
+      <div class="stat"><span class="v ${nNear?'warn':''}">${nNear}</span><span class="k eyebrow">approaching a limit</span></div>
+      <div class="stat"><span class="v">${daysAgo(latest.date)}</span><span class="k eyebrow">days since draw</span></div>
+    </div>
+  </div>`;
+
+  html += analysisHTML();
+
+  BUCKETS.forEach(b => {
+    const list = items.filter(i => i.bucket === b.key);
+    if(!list.length) return;
+    html += `<div class="watch">
+      <div class="watch-head"><span class="eyebrow">${esc(b.title)}</span><span class="rule"></span><span class="cnt">${list.length}</span></div>
+      <p class="watch-why">${esc(b.why)}</p>
+      <div class="wgrid">${list.map(i => wcard(i, b.sev)).join('')}</div>
+    </div>`;
+  });
+
+  const steady = items.filter(i => i.bucket === 'steady');
+  if(steady.length){
+    html += `<div class="watch">
+      <div class="watch-head"><span class="eyebrow">Steady</span><span class="rule"></span><span class="cnt">${steady.length}</span></div>
+      <p class="watch-why">In range with no consistent direction of travel: ${steady.map(i => esc(i.a.n)).join(', ')}.</p>
+    </div>`;
+  }
+  el.innerHTML = html;
+  wireAnalysis(el);
 }
 
+function wcard(i, sev){
+  const a = i.a;
+  const trendNote = i.delta !== null
+    ? `${i.delta > 0 ? '▲' : i.delta < 0 ? '▼' : '·'} ${fmt(Math.abs(i.delta), a.d)} since ${i.prev.date}`
+    : 'first result';
+  return `<div class="wcard sev-${sev}">
+    <div class="wc-top">
+      <span class="wc-name">${esc(a.n)}</span>
+      <span class="wc-val ${i.st!=='in'?'out':''}">${fmt(i.last.v, a.d)}<span class="cc-unit"> ${esc(a.u)}</span></span>
+    </div>
+    <p class="wc-msg">${i.msg}</p>
+    ${chartSVG(a, i.pts, true)}
+    <div class="wc-foot"><span>${esc(trendNote)}</span><span>ref ${esc(refText(a))}</span></div>
+  </div>`;
+}
+
+/* ============================ Claude analysis ============================ */
+function analysisHTML(){
+  const hasKey = !!(S.apiKey || '').trim();
+  let body = '';
+  if(analysis.busy) body = `<p class="note tight" style="margin-top:12px"><span class="spinner"></span>Reading the series…</p>`;
+  else if(analysis.error) body = `<p class="note tight" style="margin-top:12px;color:var(--signal)">${esc(analysis.error)}</p>`;
+  else if(analysis.text) body = `<div class="an-body">${mdToHTML(analysis.text)}</div>
+    <p class="an-disclaim">Generated from the numbers above by a language model. It describes direction and size of change; it does not diagnose, and it has no access to your history, medications, or symptoms. Treat every line as a question to raise, not an answer.</p>`;
+  else body = `<p class="note tight" style="margin-top:10px">Sends your analyte names, values, dates, and reference intervals to the Anthropic API and asks for a description of what is moving and how fast. Nothing else about you is sent.</p>`;
+
+  return `<div class="analysis">
+    <div class="watch-head" style="margin:0"><span class="eyebrow">Trend reading</span><span class="rule"></span>
+      ${analysis.at ? `<span class="cnt">${esc(analysis.at)}</span>` : ''}</div>
+    ${body}
+    <div class="btnrow" style="margin-top:14px">
+      <button class="btn ghost" id="anRun" ${analysis.busy?'disabled':''}>${analysis.text ? 'Run again' : 'Analyze trends'}</button>
+      ${analysis.text ? `<button class="btn ghost" id="anClear">Clear</button>` : ''}
+      ${hasKey ? '' : `<span class="sync-state">Needs an API key — set one under Data.</span>`}
+    </div>
+  </div>`;
+}
+function wireAnalysis(el){
+  const r = $('#anRun', el); if(r) r.onclick = runAnalysis;
+  const c = $('#anClear', el); if(c) c.onclick = () => { analysis = {text:'',at:'',busy:false,error:''}; renderDash(); };
+}
+
+function buildPrompt(){
+  const items = assess();
+  const lines = items.map(i => {
+    const a = i.a;
+    const series = i.pts.map(p => `${p.date}=${fmt(p.v, a.d)}`).join(' ');
+    return `- ${a.n} (${a.u || 'ratio'}); reference ${refText(a)}; ${series}`;
+  });
+  const sex = S.profile.sex;
+  return `Below are one person's own lab and vital measurements over time, taken from their personal record. Reference intervals are the ones their lab reports, or ones they entered themselves. Sex used for sex-specific intervals: ${sex}.
+
+${lines.join('\n')}
+
+Write a short reading of these series for the person who owns them. Cover, in this order:
+
+1. What is outside its reference interval, and by how much relative to the width of that interval — distinguish "barely out" from "substantially out".
+2. What is moving. Give direction and approximate rate. For each, say whether the size of the change is likely to exceed ordinary analytical and biological variation for that analyte, or whether it is within the noise you would expect between two draws.
+3. Any patterns that only appear across several analytes together, where the combination is more informative than the individual values.
+4. Anything conspicuously absent or last measured a long time ago.
+
+Then a short list of 3 to 6 specific questions worth raising with their clinician, each tied to a particular value or trend.
+
+Constraints: do not name diagnoses or state what a pattern means clinically. Do not give treatment, supplement, or dietary advice. Do not offer reassurance that something is fine, and do not imply anything is urgent. Describe what the numbers do and how confident that description can be, nothing more. Plain language, no preamble, no closing summary. Use markdown with ## headings, short paragraphs, and bullet lists.`;
+}
+
+async function runAnalysis(){
+  if(!S.draws.length){ toast('Add results first.'); return; }
+  analysis = {text:'', at:'', busy:true, error:''};
+  renderDash();
+  try{
+    const headers = {'content-type':'application/json'};
+    const key = (S.apiKey || '').trim();
+    if(key){
+      headers['x-api-key'] = key;
+      headers['anthropic-version'] = '2023-06-01';
+      headers['anthropic-dangerous-direct-browser-access'] = 'true';
+    }
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST', headers,
+      body: JSON.stringify({model:'claude-sonnet-4-6', max_tokens:2000,
+        messages:[{role:'user', content: buildPrompt()}]})
+    });
+    if(!res.ok){
+      const t = await res.text();
+      throw new Error(res.status === 401 ? 'The API key was rejected. Check it under Data.' : `API error ${res.status}. ${t.slice(0,180)}`);
+    }
+    const data = await res.json();
+    const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('\n').trim();
+    if(!text) throw new Error('The API returned nothing to show.');
+    analysis = {text, at: new Date().toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}), busy:false, error:''};
+  }catch(e){
+    analysis = {text:'', at:'', busy:false, error: e.message || 'The request failed.'};
+  }
+  renderDash();
+}
+
+/* Minimal markdown: headings, bold, bullets, paragraphs. */
+function mdToHTML(md){
+  const out = [];
+  let inList = false;
+  md.split('\n').forEach(raw => {
+    const line = raw.trim();
+    const inline = s => esc(s).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/`(.+?)`/g,'<code>$1</code>');
+    if(!line){ if(inList){ out.push('</ul>'); inList = false; } return; }
+    if(/^#{1,4}\s/.test(line)){
+      if(inList){ out.push('</ul>'); inList = false; }
+      out.push(`<h4>${inline(line.replace(/^#{1,4}\s*/,''))}</h4>`); return;
+    }
+    if(/^([-*•]|\d+\.)\s/.test(line)){
+      if(!inList){ out.push('<ul>'); inList = true; }
+      out.push(`<li>${inline(line.replace(/^([-*•]|\d+\.)\s*/,''))}</li>`); return;
+    }
+    if(inList){ out.push('</ul>'); inList = false; }
+    out.push(`<p>${inline(line)}</p>`);
+  });
+  if(inList) out.push('</ul>');
+  return out.join('');
+}
+
+/* ============================ latest ============================ */
 function renderLatest(){
   const el = $('#view-latest');
   if(!S.draws.length){
-    el.innerHTML = `<div class="empty"><p>Nothing recorded yet. Start with your most recent blood work — you can backfill older draws afterward.</p>
-      <button class="btn" data-goto="add">Add result</button></div>`;
+    el.innerHTML = `<div class="empty"><p>Nothing recorded yet.</p><button class="btn" data-goto="add">Add result</button></div>`;
     return;
   }
   const ds = sortedDraws(), latest = ds[0], prev = ds[1] || null;
@@ -546,7 +939,7 @@ function renderLatest(){
   const outCount = keys.filter(k => status(latest.values[k], refFor(BY_KEY[k])) !== 'in').length;
 
   let html = `<div class="specimen">
-    <span class="eyebrow">Most recent draw${latest.lab ? ' · ' + esc(latest.lab) : ''}</span>
+    <span class="eyebrow">Draw${latest.lab ? ' · ' + esc(latest.lab) : ''}</span>
     <h2 class="specimen-date">${longDate(latest.date)}</h2>
     <div class="specimen-meta">
       <div class="stat"><span class="v">${keys.length}</span><span class="k eyebrow">analytes</span></div>
@@ -561,103 +954,134 @@ function renderLatest(){
     if(!items.length) return;
     html += `<div class="panel"><div class="panel-head"><span class="eyebrow">${esc(p.name)}</span><span class="rule"></span></div><div class="rows">`;
     items.forEach(a => {
-      const v = latest.values[a.k], r = refFor(a), st = status(v, r);
+      const v = latest.values[a.k], st = status(v, refFor(a));
       const pv = prev && typeof prev.values[a.k] === 'number' ? prev.values[a.k] : null;
-      let delta = '';
-      if(pv !== null){
-        const dv = v - pv;
-        const arrow = dv > 0 ? '▲' : dv < 0 ? '▼' : '·';
-        delta = `${arrow} ${fmt(Math.abs(dv), a.d)}`;
-      }
+      const dv = pv === null ? '' : `${v>pv?'▲':v<pv?'▼':'·'} ${fmt(Math.abs(v-pv), a.d)}`;
       html += `<div class="row">
-        <span class="name">${esc(a.n)}</span>
+        <span class="name"><button class="info" data-def="${a.k}" aria-expanded="false" aria-label="What ${esc(a.n)} measures">i</button><span class="nm">${esc(a.n)}</span></span>
         <span class="val ${st!=='in'?'out':''}">${fmt(v, a.d)}</span>
         <span class="unit">${esc(a.u)}</span>
         ${laneHTML(a, v)}
         <span class="refs">${esc(refText(a))}</span>
-        <span class="delta">${delta}</span>
-      </div>`;
+        <span class="delta">${dv}</span>
+      </div><div class="defrow" id="def-${a.k}" hidden>${defHTML(a)}</div>`;
     });
     html += `</div></div>`;
   });
   el.innerHTML = html;
+  $$('[data-def]', el).forEach(b => b.onclick = () => {
+    const d = $('#def-' + b.dataset.def, el);
+    d.hidden = !d.hidden;
+    b.setAttribute('aria-expanded', String(!d.hidden));
+  });
 }
 
+/* ============================ trends ============================ */
 function renderTrends(){
   const el = $('#view-trends');
   const tracked = trackedKeys();
   if(!tracked.length){
-    el.innerHTML = `<div class="empty"><p>Trends appear once you have results on file. One draw gives you a baseline; two gives you a direction.</p>
+    el.innerHTML = `<div class="empty"><p>Trends appear once results are on file. One draw gives a baseline; two give a direction.</p>
       <button class="btn" data-goto="add">Add result</button></div>`;
     return;
   }
-  const panelsPresent = PANELS.filter(p => tracked.some(a => a.p === p.key));
+  const present = PANELS.filter(p => tracked.some(a => a.p === p.key));
   let html = `<div class="toolbar">
     <button class="chip" data-panel="all" aria-pressed="${filterPanel==='all'}">All</button>
-    ${panelsPresent.map(p => `<button class="chip" data-panel="${p.key}" aria-pressed="${filterPanel===p.key}">${esc(p.name)}</button>`).join('')}
-    <input type="search" id="trendSearch" placeholder="Filter by name" value="${esc(filterText)}" style="margin-left:auto;min-width:170px">
+    ${present.map(p => `<button class="chip" data-panel="${p.key}" aria-pressed="${filterPanel===p.key}">${esc(p.name)}</button>`).join('')}
+    <input type="search" id="trendSearch" placeholder="Filter by name" value="${esc(filterText)}" style="margin-left:auto;max-width:200px">
   </div>`;
 
   const shown = tracked.filter(a =>
     (filterPanel === 'all' || a.p === filterPanel) &&
-    (!filterText || a.n.toLowerCase().includes(filterText.toLowerCase()))
-  );
-  if(!shown.length){
-    html += `<div class="empty"><p>No analytes match that filter.</p></div>`;
-    el.innerHTML = html; wireTrends(); return;
-  }
+    (!filterText || a.n.toLowerCase().includes(filterText.toLowerCase())));
 
-  html += `<div class="grid">`;
-  shown.forEach(a => {
-    const pts = seriesFor(a.k);
-    const last = pts[pts.length-1];
+  if(!shown.length){
+    el.innerHTML = html + `<div class="empty"><p>No analytes match that filter.</p></div>`;
+    wireTrends(); return;
+  }
+  html += `<div class="grid">` + shown.map(a => {
+    const pts = seriesFor(a.k), last = pts[pts.length-1];
     const r = refFor(a), st = status(last.v, r);
-    html += `<div class="chart-card">
+    return `<div class="chart-card">
       <div class="cc-head">
-        <span class="cc-name">${esc(a.n)}</span>
-        <span class="cc-unit">${esc(a.u)}</span>
+        <span class="cc-name">${esc(a.n)}</span><span class="cc-unit">${esc(a.u)}</span>
         <span class="cc-last ${st!=='in'?'out':''}">${fmt(last.v, a.d)}</span>
       </div>
-      ${trendSVG(a, pts)}
+      ${chartSVG(a, pts, false)}
       <div class="cc-foot">
-        <span class="cc-ref">ref ${esc(refText(a))}${r && r.custom ? ' (yours)' : ''} · n=${pts.length}</span>
-        <button class="linkbtn" data-ovr="${a.k}">Set range</button>
+        <span class="cc-ref">ref ${esc(refText(a))}${r && r.custom ? ' · yours' : ''} · n=${pts.length}</span>
+        <span><button class="linkbtn" data-cdef="${a.k}">What is this</button>
+        <button class="linkbtn" data-ovr="${a.k}" style="margin-left:9px">Set range</button></span>
       </div>
-      ${a.note ? `<p class="note" style="font-size:11px">${esc(a.note)}</p>` : ''}
+      <p class="cc-def" id="cdef-${a.k}" hidden>${defHTML(a)}</p>
       <div class="ovr" id="ovr-${a.k}" hidden>
-        <input type="number" step="any" id="ovrlo-${a.k}" placeholder="low" value="${r && r.lo !== null && r.lo !== undefined ? r.lo : ''}">
-        <input type="number" step="any" id="ovrhi-${a.k}" placeholder="high" value="${r && r.hi !== null && r.hi !== undefined ? r.hi : ''}">
+        <input type="number" step="any" id="ovrlo-${a.k}" placeholder="low" value="${r && r.lo !== null && r.lo !== undefined ? r.lo : ''}" aria-label="Lower bound">
+        <input type="number" step="any" id="ovrhi-${a.k}" placeholder="high" value="${r && r.hi !== null && r.hi !== undefined ? r.hi : ''}" aria-label="Upper bound">
         <button class="linkbtn" data-ovrsave="${a.k}">Save</button>
-        <button class="linkbtn" data-ovrclear="${a.k}">Use default</button>
+        <button class="linkbtn" data-ovrclear="${a.k}">Default</button>
       </div>
     </div>`;
-  });
-  html += `</div>`;
+  }).join('') + `</div>`;
   el.innerHTML = html;
   wireTrends();
 }
-
 function wireTrends(){
   const el = $('#view-trends');
-  el.querySelectorAll('[data-panel]').forEach(b => b.onclick = () => { filterPanel = b.dataset.panel; renderTrends(); });
-  const s = $('#trendSearch');
+  $$('[data-panel]', el).forEach(b => b.onclick = () => { filterPanel = b.dataset.panel; renderTrends(); });
+  const s = $('#trendSearch', el);
   if(s) s.oninput = () => {
-    filterText = s.value;
-    renderTrends();
+    filterText = s.value; renderTrends();
     const f = $('#trendSearch'); if(f){ f.focus(); f.setSelectionRange(f.value.length, f.value.length); }
   };
-  el.querySelectorAll('[data-ovr]').forEach(b => b.onclick = () => {
-    const box = $('#ovr-' + b.dataset.ovr); box.hidden = !box.hidden;
-  });
-  el.querySelectorAll('[data-ovrsave]').forEach(b => b.onclick = () => {
+  $$('[data-cdef]', el).forEach(b => b.onclick = () => { const p = $('#cdef-'+b.dataset.cdef); p.hidden = !p.hidden; });
+  $$('[data-ovr]', el).forEach(b => b.onclick = () => { const p = $('#ovr-'+b.dataset.ovr); p.hidden = !p.hidden; });
+  $$('[data-ovrsave]', el).forEach(b => b.onclick = () => {
     const k = b.dataset.ovrsave;
     const lo = $('#ovrlo-'+k).value.trim(), hi = $('#ovrhi-'+k).value.trim();
     if(lo === '' && hi === ''){ toast('Enter at least one bound.'); return; }
     S.overrides[k] = {lo: lo === '' ? null : Number(lo), hi: hi === '' ? null : Number(hi)};
     save(); renderAll(); toast('Reference interval updated.');
   });
-  el.querySelectorAll('[data-ovrclear]').forEach(b => b.onclick = () => {
+  $$('[data-ovrclear]', el).forEach(b => b.onclick = () => {
     delete S.overrides[b.dataset.ovrclear]; save(); renderAll(); toast('Back to the default interval.');
+  });
+}
+</script>
+<script>
+/* ============================ add result ============================ */
+function derivedPreview(vals){
+  const out = {};
+  const order = ['globulin','agratio','bcratio','anion','vldl','nonhdl','cholhdl','eag','ironsat'];
+  order.forEach(k => {
+    const a = BY_KEY[k];
+    const src = {...vals, ...out};
+    if(a.from.deps.every(dep => typeof src[dep] === 'number' && Number.isFinite(src[dep]))){
+      const n = a.from.fn(src);
+      if(Number.isFinite(n)) out[k] = Number(n.toFixed(a.d + 2));
+    }
+  });
+  return out;
+}
+function currentEntryValues(){
+  const v = {};
+  $$('#view-add .entry-row input').forEach(i => {
+    const n = parseVal(i.value);
+    if(n !== null) v[i.dataset.k] = n;
+  });
+  return v;
+}
+function refreshEntryHints(){
+  const typed = currentEntryValues();
+  const der = derivedPreview(typed);
+  $$('#view-add .entry-row input').forEach(i => {
+    const a = BY_KEY[i.dataset.k], n = parseVal(i.value);
+    i.classList.toggle('out', n !== null && status(n, refFor(a)) !== 'in');
+    if(a.from){
+      const auto = der[a.k];
+      i.placeholder = (auto !== undefined && i.value.trim() === '') ? fmt(auto, a.d) : '';
+      i.classList.toggle('derived', auto !== undefined && i.value.trim() === '');
+    }
   });
 }
 
@@ -667,23 +1091,17 @@ function renderAdd(){
   const today = new Date().toISOString().slice(0,10);
 
   if(draw && !entryPanels.size){
-    const present = new Set(Object.keys(draw.values).map(k => BY_KEY[k] && BY_KEY[k].p).filter(Boolean));
-    ORDERS.forEach(o => { if(o.panels.every(p => present.has(p))) o.panels.forEach(p => entryPanels.add(p)); });
-    present.forEach(p => entryPanels.add(p));
+    Object.keys(draw.values).forEach(k => { if(BY_KEY[k]) entryPanels.add(BY_KEY[k].p); });
   }
 
   let html = `<div class="block">
     <span class="eyebrow">${draw ? 'Editing draw' : 'New draw'}</span>
     <div class="form-grid" style="margin-top:12px">
-      <div class="field"><label for="fDate">Collection date</label>
-        <input type="date" id="fDate" value="${draw ? draw.date : today}"></div>
-      <div class="field"><label for="fLab">Lab or source</label>
-        <input type="text" id="fLab" placeholder="Quest, home cuff, hospital" value="${draw ? esc(draw.lab || '') : ''}"></div>
-      <div class="field" style="grid-column:1/-1"><label for="fNote">Note</label>
-        <input type="text" id="fNote" placeholder="Fasting, post-illness, new medication" value="${draw ? esc(draw.note || '') : ''}"></div>
+      <div class="field"><label for="fDate">Collection date</label><input type="date" id="fDate" value="${draw ? draw.date : today}"></div>
+      <div class="field"><label for="fLab">Lab or source</label><input type="text" id="fLab" placeholder="Quest, home cuff, hospital" value="${draw ? esc(draw.lab || '') : ''}"></div>
+      <div class="field" style="grid-column:1/-1"><label for="fNote">Note</label><input type="text" id="fNote" placeholder="Fasting, post-illness, new medication" value="${draw ? esc(draw.note || '') : ''}"></div>
     </div>
   </div>
-
   <div class="block">
     <span class="eyebrow">What was ordered</span>
     <div class="toolbar" style="margin:12px 0 0">
@@ -691,19 +1109,20 @@ function renderAdd(){
     </div>
   </div>`;
 
-  const panelsToShow = PANELS.filter(p => entryPanels.has(p.key));
-  if(!panelsToShow.length){
-    html += `<div class="empty"><p>Pick the panels on your report. Leave any analyte blank if it wasn't measured.</p></div>`;
+  const show = PANELS.filter(p => entryPanels.has(p.key));
+  if(!show.length){
+    html += `<div class="empty"><p>Pick the panels on your report. Leave any analyte blank if it was not measured — calculated values fill themselves in.</p></div>`;
   }
-  panelsToShow.forEach(p => {
+  show.forEach(p => {
     html += `<div class="block"><div class="panel-head" style="margin-bottom:8px"><span class="eyebrow">${esc(p.name)}</span><span class="rule"></span></div>`;
     A.filter(a => a.p === p.key).forEach(a => {
       const v = draw && typeof draw.values[a.k] === 'number' ? draw.values[a.k] : '';
       html += `<div class="entry-row">
-        <span class="en">${esc(a.n)} <span class="eu">${esc(refText(a))}</span></span>
+        <span class="en"><button class="info" data-edef="${a.k}" aria-expanded="false" aria-label="What ${esc(a.n)} measures">i</button>
+          ${esc(a.n)} <span class="eu">${esc(refText(a))}${a.from ? ' · calculated' : ''}</span></span>
         <input type="text" inputmode="decimal" data-k="${a.k}" value="${v}" aria-label="${esc(a.n)} in ${esc(a.u)}">
         <span class="eu">${esc(a.u)}</span>
-      </div>`;
+      </div><div class="entry-def" id="edef-${a.k}" hidden>${defHTML(a)}</div>`;
     });
     html += `</div>`;
   });
@@ -711,82 +1130,197 @@ function renderAdd(){
   html += `<div class="btnrow">
     <button class="btn" id="saveDraw">${draw ? 'Save changes' : 'Save draw'}</button>
     ${draw ? `<button class="btn ghost" id="cancelEdit">Cancel</button>` : ''}
-    <span class="note" style="margin:0">Values save to this browser only.</span>
+    <span class="note" style="margin:0">Saved to this browser. Push to your gist from Data to reach other devices.</span>
   </div>`;
   el.innerHTML = html;
 
-  el.querySelectorAll('[data-order]').forEach(b => b.onclick = () => {
+  $$('[data-order]', el).forEach(b => b.onclick = () => {
     const o = ORDERS.find(x => x.key === b.dataset.order);
     const on = o.panels.every(p => entryPanels.has(p));
     o.panels.forEach(p => on ? entryPanels.delete(p) : entryPanels.add(p));
-    persistForm(); renderAdd();
+    stashForm(); renderAdd(); restoreForm();
   });
-  el.querySelectorAll('.entry-row input').forEach(inp => inp.oninput = () => {
-    const a = BY_KEY[inp.dataset.k], n = parseVal(inp.value);
-    inp.classList.toggle('out', n !== null && status(n, refFor(a)) !== 'in');
+  $$('[data-edef]', el).forEach(b => b.onclick = () => {
+    const d = $('#edef-'+b.dataset.edef, el);
+    d.hidden = !d.hidden; b.setAttribute('aria-expanded', String(!d.hidden));
   });
-  el.querySelectorAll('.entry-row input').forEach(inp => {
-    const a = BY_KEY[inp.dataset.k], n = parseVal(inp.value);
-    inp.classList.toggle('out', n !== null && status(n, refFor(a)) !== 'in');
-  });
+  $$('.entry-row input', el).forEach(i => i.oninput = refreshEntryHints);
   $('#saveDraw').onclick = saveDraw;
   const c = $('#cancelEdit'); if(c) c.onclick = () => { editingId = null; entryPanels.clear(); renderAdd(); go('data'); };
+  refreshEntryHints();
 }
 
-let formCache = {};
-function persistForm(){
-  formCache = {date: $('#fDate').value, lab: $('#fLab').value, note: $('#fNote').value, values:{}};
-  document.querySelectorAll('#view-add .entry-row input').forEach(i => {
-    if(i.value.trim() !== '') formCache.values[i.dataset.k] = i.value;
+let stash = null;
+function stashForm(){
+  if(!$('#fDate')) return;
+  stash = {date:$('#fDate').value, lab:$('#fLab').value, note:$('#fNote').value, values:{}};
+  $$('#view-add .entry-row input').forEach(i => { if(i.value.trim() !== '') stash.values[i.dataset.k] = i.value; });
+}
+function restoreForm(){
+  if(!stash || !$('#fDate')) return;
+  $('#fDate').value = stash.date; $('#fLab').value = stash.lab; $('#fNote').value = stash.note;
+  Object.entries(stash.values).forEach(([k,v]) => {
+    const i = document.querySelector(`#view-add .entry-row input[data-k="${k}"]`);
+    if(i) i.value = v;
   });
-  // re-apply after re-render
-  setTimeout(() => {
-    if(!$('#fDate')) return;
-    $('#fDate').value = formCache.date; $('#fLab').value = formCache.lab; $('#fNote').value = formCache.note;
-    Object.entries(formCache.values).forEach(([k,v]) => {
-      const i = document.querySelector(`#view-add .entry-row input[data-k="${k}"]`);
-      if(i){ i.value = v; const n = parseVal(v); i.classList.toggle('out', n !== null && status(n, refFor(BY_KEY[k])) !== 'in'); }
-    });
-  }, 0);
+  stash = null;
+  refreshEntryHints();
 }
-function parseVal(raw){
-  if(raw === null || raw === undefined) return null;
-  const s = String(raw).replace(/[<>=\s,]/g, '');
-  if(s === '') return null;
-  const n = Number(s);
-  return Number.isFinite(n) ? n : null;
-}
+
 function saveDraw(){
   const date = $('#fDate').value;
   if(!date){ toast('A collection date is required.'); $('#fDate').focus(); return; }
   const values = {};
   let bad = 0;
-  document.querySelectorAll('#view-add .entry-row input').forEach(i => {
+  $$('#view-add .entry-row input').forEach(i => {
     if(i.value.trim() === '') return;
     const n = parseVal(i.value);
-    if(n === null){ bad++; return; }
+    if(n === null){ bad++; i.classList.add('out'); return; }
     values[i.dataset.k] = n;
   });
   if(bad){ toast(`${bad} field${bad>1?'s are':' is'} not a number — fix or clear ${bad>1?'them':'it'}.`); return; }
   if(!Object.keys(values).length){ toast('Enter at least one value.'); return; }
 
-  const payload = {date, lab: $('#fLab').value.trim(), note: $('#fNote').value.trim(), values};
+  /* fill in anything the lab calculates, only where it was left blank */
+  const der = derivedPreview(values);
+  Object.entries(der).forEach(([k,v]) => {
+    if(values[k] === undefined && entryPanels.has(BY_KEY[k].p)) values[k] = Number(v.toFixed(BY_KEY[k].d + 1));
+  });
+
+  const payload = {date, lab:$('#fLab').value.trim(), note:$('#fNote').value.trim(), values, mtime: Date.now()};
   if(editingId){
-    const d = S.draws.find(x => x.id === editingId);
-    Object.assign(d, payload);
-    editingId = null;
-    toast('Draw updated.');
+    Object.assign(S.draws.find(x => x.id === editingId), payload);
+    editingId = null; toast('Draw updated.');
   }else{
-    S.draws.push({id: 'd' + Date.now().toString(36) + Math.random().toString(36).slice(2,6), ...payload});
+    S.draws.push({id:'d'+Date.now().toString(36)+Math.random().toString(36).slice(2,6), ...payload});
     toast('Draw saved.');
   }
-  entryPanels.clear(); formCache = {};
-  save(); renderAll(); go('latest');
+  entryPanels.clear(); stash = null;
+  analysis = {text:'', at:'', busy:false, error:''};
+  save(); renderAll(); go('dash');
 }
 
+/* ============================ encryption + gist sync ============================ */
+const b64 = buf => btoa(String.fromCharCode(...new Uint8Array(buf)));
+const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+const HDR = 'labrecord-v1';   /* no dot: '.' is the field separator */
+
+async function deriveKey(pass, salt){
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2', salt, iterations:310000, hash:'SHA-256'},
+    base, {name:'AES-GCM', length:256}, false, ['encrypt','decrypt']);
+}
+function syncPayload(){
+  return {schema:2, profile:S.profile, overrides:S.overrides, draws:S.draws, deleted:S.deleted, at:Date.now()};
+}
+async function encryptPayload(obj, pass){
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const key = await deriveKey(pass, salt);
+  const ct = await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, new TextEncoder().encode(JSON.stringify(obj)));
+  return [HDR, b64(salt), b64(iv), b64(ct)].join('.');
+}
+async function decryptPayload(blob, pass){
+  const parts = String(blob).trim().split('.');
+  if(parts.length !== 4 || parts[0] !== HDR) throw new Error('That file is not an encrypted lab record.');
+  const key = await deriveKey(pass, unb64(parts[1]));
+  let plain;
+  try{ plain = await crypto.subtle.decrypt({name:'AES-GCM', iv:unb64(parts[2])}, key, unb64(parts[3])); }
+  catch(e){ throw new Error('Wrong passphrase, or the file was altered.'); }
+  return JSON.parse(new TextDecoder().decode(plain));
+}
+
+async function gh(path, opts = {}){
+  const token = (S.sync.token || '').trim();
+  if(!token) throw new Error('Add a GitHub token under Data first.');
+  const res = await fetch('https://api.github.com' + path, {
+    ...opts,
+    headers:{'Accept':'application/vnd.github+json', 'Authorization':'Bearer ' + token,
+             'Content-Type':'application/json', ...(opts.headers||{})}
+  });
+  if(!res.ok){
+    if(res.status === 401) throw new Error('GitHub rejected the token. Check that it has gist scope and has not expired.');
+    if(res.status === 404) throw new Error('That gist ID was not found under this token.');
+    throw new Error(`GitHub error ${res.status}.`);
+  }
+  return res.json();
+}
+
+function needPass(){
+  if(passphrase) return passphrase;
+  const p = prompt('Passphrase for the encrypted gist.\n\nThis is the only key — there is no recovery if it is lost.');
+  if(p){ passphrase = p; sessionStorage.setItem('labrecord.pass', p); }
+  return passphrase;
+}
+function setSyncState(msg, bad){
+  const el = $('#syncState');
+  if(el){ el.textContent = msg; el.style.color = bad ? 'var(--signal)' : ''; }
+}
+
+async function pushGist(){
+  const pass = needPass(); if(!pass) return;
+  setSyncState('Encrypting…');
+  try{
+    const content = await encryptPayload(syncPayload(), pass);
+    const files = {'lab-record.enc': {content}};
+    let g;
+    if((S.sync.gistId || '').trim()){
+      g = await gh('/gists/' + S.sync.gistId.trim(), {method:'PATCH', body: JSON.stringify({files})});
+    }else{
+      g = await gh('/gists', {method:'POST', body: JSON.stringify({description:'lab record (encrypted)', public:false, files})});
+      S.sync.gistId = g.id;
+    }
+    S.sync.lastPush = Date.now();
+    save(); renderData();
+    setSyncState(`Pushed ${S.draws.length} draws · ${new Date().toLocaleTimeString()}`);
+    toast('Pushed to gist.');
+  }catch(e){ setSyncState(e.message, true); }
+}
+
+async function pullGist(){
+  if(!(S.sync.gistId || '').trim()){ setSyncState('Enter a gist ID first, or push to create one.', true); return; }
+  const pass = needPass(); if(!pass) return;
+  setSyncState('Fetching…');
+  try{
+    const g = await gh('/gists/' + S.sync.gistId.trim());
+    const f = g.files['lab-record.enc'];
+    if(!f) throw new Error('No lab-record.enc file in that gist.');
+    const content = f.truncated ? await (await fetch(f.raw_url)).text() : f.content;
+    const remote = await decryptPayload(content, pass);
+    const r = merge(remote);
+    S.sync.lastPull = Date.now();
+    save(); renderAll();
+    setSyncState(`Pulled · ${r.added} new, ${r.updated} updated, ${r.removed} removed`);
+    toast(`Merged: ${r.added} new, ${r.updated} updated.`);
+  }catch(e){ setSyncState(e.message, true); }
+}
+
+function merge(remote){
+  const byId = new Map(S.draws.map(d => [d.id, d]));
+  const tomb = new Set(S.deleted.map(x => x.id));
+  let added = 0, updated = 0, removed = 0;
+  (remote.draws || []).forEach(rd => {
+    if(tomb.has(rd.id)) return;
+    const local = byId.get(rd.id);
+    if(!local){ S.draws.push(rd); added++; }
+    else if((rd.mtime || 0) > (local.mtime || 0)){ Object.assign(local, rd); updated++; }
+  });
+  (remote.deleted || []).forEach(rd => {
+    if(!S.deleted.some(x => x.id === rd.id)) S.deleted.push(rd);
+    const i = S.draws.findIndex(d => d.id === rd.id);
+    if(i >= 0 && (S.draws[i].mtime || 0) <= (rd.at || 0)){ S.draws.splice(i,1); removed++; }
+  });
+  S.overrides = {...(remote.overrides || {}), ...S.overrides};
+  return {added, updated, removed};
+}
+</script>
+<script>
+/* ============================ data & settings ============================ */
 function renderData(){
   const el = $('#view-data');
   const ds = sortedDraws();
+  const nOvr = Object.keys(S.overrides).length;
+
   let html = `<div class="block">
     <span class="eyebrow">Reference intervals</span>
     <div class="form-grid" style="margin-top:12px">
@@ -795,21 +1329,51 @@ function renderData(){
           <option value="male" ${S.profile.sex==='male'?'selected':''}>Male</option>
           <option value="female" ${S.profile.sex==='female'?'selected':''}>Female</option>
         </select>
-        <span class="hint">Affects hemoglobin, hematocrit, RBC, creatinine, ferritin, HDL, uric acid.</span>
+        <span class="hint">Applies to hemoglobin, hematocrit, RBC, creatinine, ferritin, HDL and uric acid.</span>
       </div>
     </div>
-    <p class="note">Built-in intervals are common adult ranges, not your lab's. Where they differ, set your own from the Trends view — ${Object.keys(S.overrides).length} analyte${Object.keys(S.overrides).length===1?'':'s'} currently overridden.
-    ${Object.keys(S.overrides).length ? `<button class="linkbtn" id="clearOvr" style="margin-left:8px">Reset all</button>` : ''}</p>
+    <p class="note">Built-in intervals are common adult ranges, not your lab's. Set your own from any trend card — ${nOvr} overridden so far.
+    ${nOvr ? `<button class="linkbtn" id="clearOvr" style="margin-left:8px">Reset all</button>` : ''}</p>
   </div>
 
   <div class="block">
-    <span class="eyebrow">Backup</span>
-    <p class="note">Everything lives in this browser's storage. Clearing site data erases it, so export before you switch machines.</p>
-    <div class="btnrow" style="margin-top:14px">
+    <span class="eyebrow">Trend reading</span>
+    <div class="form-grid" style="margin-top:12px">
+      <div class="field" style="grid-column:1/-1"><label for="fKey">Anthropic API key</label>
+        <input type="password" id="fKey" placeholder="sk-ant-…" value="${esc(S.apiKey || '')}" autocomplete="off">
+        <span class="hint">Stored in this browser only. It is readable by anything with access to this device, so scope and rotate it accordingly.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <span class="eyebrow">Sync across devices</span>
+    <p class="note tight">Your record is encrypted in this browser with a passphrase, then stored as a secret GitHub gist. Secret gists are unlisted rather than private, so the encryption is what protects the contents. The passphrase is never stored anywhere and cannot be recovered.</p>
+    <div class="form-grid" style="margin-top:14px">
+      <div class="field"><label for="fToken">GitHub token</label>
+        <input type="password" id="fToken" placeholder="github_pat_…" value="${esc(S.sync.token || '')}" autocomplete="off">
+        <span class="hint">Fine-grained token, gist scope only.</span></div>
+      <div class="field"><label for="fGist">Gist ID</label>
+        <input type="text" id="fGist" placeholder="created on first push" value="${esc(S.sync.gistId || '')}">
+        <span class="hint">Copy this to your other devices.</span></div>
+    </div>
+    <div class="btnrow">
+      <button class="btn ghost" id="pushBtn">Push</button>
+      <button class="btn ghost" id="pullBtn">Pull &amp; merge</button>
+      <button class="btn ghost" id="passBtn">${passphrase ? 'Change passphrase' : 'Set passphrase'}</button>
+      <span class="sync-state" id="syncState">${S.sync.lastPush || S.sync.lastPull ? `last push ${S.sync.lastPush ? new Date(S.sync.lastPush).toLocaleString() : '—'}` : 'not synced yet'}</span>
+    </div>
+    <p class="note">Merging keeps whichever version of a draw was edited most recently and carries deletions across. Reference overrides prefer this device.</p>
+  </div>
+
+  <div class="block">
+    <span class="eyebrow">Backup &amp; print</span>
+    <p class="note tight">Clearing this site's data erases the local copy, so keep a gist or a JSON file.</p>
+    <div class="btnrow">
       <button class="btn ghost" id="expBtn">Export JSON</button>
       <button class="btn ghost" id="impBtn">Import JSON</button>
       <input type="file" id="impFile" accept="application/json,.json" hidden>
-      <button class="btn ghost" onclick="window.print()">Print</button>
+      <button class="btn ghost" id="printBtn">Print full record</button>
       <button class="btn danger" id="wipeBtn">Erase everything</button>
     </div>
   </div>`;
@@ -819,51 +1383,57 @@ function renderData(){
   }else{
     html += `<table class="draws"><thead><tr><th>Date</th><th>Source</th><th>Values</th><th>Note</th><th></th></tr></thead><tbody>`;
     ds.forEach(d => {
-      const n = Object.keys(d.values).filter(k => BY_KEY[k]).length;
-      const out = Object.keys(d.values).filter(k => BY_KEY[k] && status(d.values[k], refFor(BY_KEY[k])) !== 'in').length;
-      html += `<tr>
-        <td class="d">${esc(d.date)}</td>
-        <td>${esc(d.lab || '—')}</td>
-        <td class="d">${n}${out ? ` <span style="color:var(--signal)">· ${out} out</span>` : ''}</td>
+      const ks = Object.keys(d.values).filter(k => BY_KEY[k]);
+      const out = ks.filter(k => status(d.values[k], refFor(BY_KEY[k])) !== 'in').length;
+      html += `<tr><td class="d">${esc(d.date)}</td><td>${esc(d.lab || '—')}</td>
+        <td class="d">${ks.length}${out ? ` <span style="color:var(--signal)">· ${out} out</span>` : ''}</td>
         <td>${esc(d.note || '')}</td>
-        <td class="act"><button class="linkbtn" data-edit="${d.id}">Edit</button><button class="linkbtn" data-del="${d.id}">Delete</button></td>
-      </tr>`;
+        <td class="act"><button class="linkbtn" data-edit="${d.id}">Edit</button><button class="linkbtn" data-del="${d.id}">Delete</button></td></tr>`;
     });
     html += `</tbody></table>`;
   }
   el.innerHTML = html;
 
   $('#fSex').onchange = e => { S.profile.sex = e.target.value; save(); renderAll(); };
+  $('#fKey').onchange = e => { S.apiKey = e.target.value.trim(); save(); };
+  $('#fToken').onchange = e => { S.sync.token = e.target.value.trim(); save(); };
+  $('#fGist').onchange = e => { S.sync.gistId = e.target.value.trim(); save(); };
   const co = $('#clearOvr'); if(co) co.onclick = () => { S.overrides = {}; save(); renderAll(); toast('Intervals reset to defaults.'); };
+  $('#pushBtn').onclick = pushGist;
+  $('#pullBtn').onclick = pullGist;
+  $('#passBtn').onclick = () => {
+    const p = prompt('Passphrase for the encrypted gist.\n\nUse the same one on every device. There is no recovery if it is lost.', '');
+    if(p){ passphrase = p; sessionStorage.setItem('labrecord.pass', p); setSyncState('Passphrase set for this session.'); renderData(); }
+  };
   $('#expBtn').onclick = doExport;
   $('#impBtn').onclick = () => $('#impFile').click();
   $('#impFile').onchange = doImport;
+  $('#printBtn').onclick = printAll;
   $('#wipeBtn').onclick = () => {
-    if(confirm('Erase all draws and settings from this browser? Export first if you want a copy.')){
-      S = {schema:1, profile:{sex:'male'}, overrides:{}, draws:[]};
-      save(); renderAll(); toast('Everything erased.');
+    if(confirm('Erase all draws and settings from this browser? Export or push first if you want a copy.')){
+      S = blank(); save(); renderAll(); toast('Everything erased.');
     }
   };
-  el.querySelectorAll('[data-edit]').forEach(b => b.onclick = () => {
-    editingId = b.dataset.edit; entryPanels.clear(); renderAdd(); go('add');
-  });
-  el.querySelectorAll('[data-del]').forEach(b => b.onclick = () => {
+  $$('[data-edit]', el).forEach(b => b.onclick = () => { editingId = b.dataset.edit; entryPanels.clear(); renderAdd(); go('add'); });
+  $$('[data-del]', el).forEach(b => b.onclick = () => {
     const d = S.draws.find(x => x.id === b.dataset.del);
     if(confirm(`Delete the draw from ${d.date}?`)){
       S.draws = S.draws.filter(x => x.id !== b.dataset.del);
-      save(); renderAll(); toast('Draw deleted.');
+      S.deleted.push({id: b.dataset.del, at: Date.now()});
+      save(); renderAll(); toast('Draw deleted. Push to remove it elsewhere.');
     }
   });
 }
 
 function doExport(){
-  const blob = new Blob([JSON.stringify(S, null, 2)], {type:'application/json'});
+  const payload = syncPayload();
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = `lab-record-${new Date().toISOString().slice(0,10)}.json`;
   a.click();
-  setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
-  toast('Exported.');
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  toast('Exported. The file is not encrypted.');
 }
 function doImport(e){
   const f = e.target.files[0]; if(!f) return;
@@ -872,33 +1442,45 @@ function doImport(e){
     try{
       const inc = JSON.parse(rd.result);
       if(!inc || !Array.isArray(inc.draws)) throw new Error('shape');
-      const have = new Set(S.draws.map(d => d.id));
-      let added = 0;
-      inc.draws.forEach(d => { if(!have.has(d.id)){ S.draws.push(d); added++; } });
-      S.overrides = {...S.overrides, ...(inc.overrides || {})};
+      const r = merge(inc);
       if(inc.profile && inc.profile.sex) S.profile.sex = inc.profile.sex;
       save(); renderAll();
-      toast(`Imported ${added} new draw${added===1?'':'s'}.`);
-    }catch(err){
-      toast('That file is not a lab record export.');
-    }
+      toast(`Imported: ${r.added} new, ${r.updated} updated.`);
+    }catch(err){ toast('That file is not a lab record export.'); }
     e.target.value = '';
   };
   rd.readAsText(f);
 }
 
+function printAll(){
+  const ds = sortedDraws();
+  $('#printSub').textContent = ds.length
+    ? `${S.draws.length} draws · ${ds[ds.length-1].date} to ${ds[0].date} · printed ${new Date().toISOString().slice(0,10)}`
+    : `printed ${new Date().toISOString().slice(0,10)}`;
+  document.body.classList.add('print-all');
+  window.print();
+}
+window.addEventListener('afterprint', () => document.body.classList.remove('print-all'));
+
 /* ============================ routing ============================ */
+const VIEWS = ['dash','latest','trends','add','data'];
 function go(v){
   view = v;
-  document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.view === v)));
-  ['latest','trends','add','data'].forEach(k => { $('#view-'+k).hidden = (k !== v); });
-  window.scrollTo({top:0, behavior:'instant'});
+  $$('.tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.view === v)));
+  VIEWS.forEach(k => { $('#view-'+k).hidden = (k !== v); });
+  try{ window.scrollTo({top:0, behavior:'instant'}); }catch(e){ window.scrollTo(0,0); }
+}
+function renderMasthead(){
+  const n = S.draws.length;
+  if(!n){ $('#mastheadMeta').textContent = 'no results yet'; return; }
+  const ds = sortedDraws();
+  $('#mastheadMeta').textContent = `${n} draw${n>1?'s':''} · ${ds[n-1].date} to ${ds[0].date}`;
 }
 function renderAll(){
-  renderMasthead(); renderLatest(); renderTrends(); renderData(); renderAdd();
+  renderMasthead(); renderDash(); renderLatest(); renderTrends(); renderData(); renderAdd();
 }
-document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
-  if(t.dataset.view === 'add' && view !== 'add'){ editingId = null; }
+$$('.tab').forEach(t => t.onclick = () => {
+  if(t.dataset.view === 'add' && view !== 'add' && editingId){ editingId = null; entryPanels.clear(); renderAdd(); }
   go(t.dataset.view);
 });
 document.addEventListener('click', e => {
@@ -907,7 +1489,7 @@ document.addEventListener('click', e => {
 });
 
 renderAll();
-go('latest');
+go('dash');
 </script>
 </body>
 </html>
