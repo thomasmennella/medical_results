@@ -459,7 +459,7 @@ let view = 'dash';
 let filterPanel = 'all', filterText = '';
 let editingId = null;
 let entryPanels = new Set();
-let analysis = {text:'', at:'', busy:false, error:''};
+let analysis = {text:'', at:'', busy:false, error:'', truncated:false};
 let passphrase = sessionStorage.getItem('labrecord.pass') || '';
 
 function blank(){ return {schema:2, profile:{sex:'male'}, overrides:{}, draws:[], deleted:[], sync:{gistId:'', token:''}}; }
@@ -824,14 +824,23 @@ function wcard(i, sev){
 }
 
 /* ============================ Claude analysis ============================ */
+const DISCLAIM = `<p class="an-disclaim">Generated from the numbers above by a language model. It describes direction and size of change; it does not diagnose, and it has no access to your history, medications, or symptoms. Treat every line as a question to raise, not an answer.</p>`;
+
 function analysisHTML(){
   const hasKey = !!(S.apiKey || '').trim();
   let body = '';
-  if(analysis.busy) body = `<p class="note tight" style="margin-top:12px"><span class="spinner"></span>Reading the series…</p>`;
-  else if(analysis.error) body = `<p class="note tight" style="margin-top:12px;color:var(--signal)">${esc(analysis.error)}</p>`;
-  else if(analysis.text) body = `<div class="an-body">${mdToHTML(analysis.text)}</div>
-    <p class="an-disclaim">Generated from the numbers above by a language model. It describes direction and size of change; it does not diagnose, and it has no access to your history, medications, or symptoms. Treat every line as a question to raise, not an answer.</p>`;
-  else body = `<p class="note tight" style="margin-top:10px">Sends your analyte names, values, dates, and reference intervals to the Anthropic API and asks for a description of what is moving and how fast. Nothing else about you is sent.</p>`;
+  if(analysis.error){
+    body = `<p class="note tight" style="margin-top:12px;color:var(--signal)">${esc(analysis.error)}</p>`;
+  }else if(analysis.busy || analysis.text){
+    body = `<div class="an-body" id="anBody">${analysis.text ? mdToHTML(analysis.text) : ''}</div>`
+      + (analysis.busy
+          ? `<p class="note tight" id="anWait"><span class="spinner"></span>Reading the series…</p>`
+          : (analysis.truncated
+              ? `<p class="note tight" style="color:var(--warn)">The reply reached its length limit and stopped mid-thought. Run it again, or raise the cap in <code>MAX_TOKENS</code>.</p>` : '')
+            + DISCLAIM);
+  }else{
+    body = `<p class="note tight" style="margin-top:10px">Sends your analyte names, values, dates, and reference intervals to the Anthropic API and asks for a description of what is moving and how fast. Nothing else about you is sent.</p>`;
+  }
 
   return `<div class="analysis">
     <div class="watch-head" style="margin:0"><span class="eyebrow">Trend reading</span><span class="rule"></span>
@@ -839,14 +848,26 @@ function analysisHTML(){
     ${body}
     <div class="btnrow" style="margin-top:14px">
       <button class="btn ghost" id="anRun" ${analysis.busy?'disabled':''}>${analysis.text ? 'Run again' : 'Analyze trends'}</button>
-      ${analysis.text ? `<button class="btn ghost" id="anClear">Clear</button>` : ''}
+      ${analysis.text && !analysis.busy ? `<button class="btn ghost" id="anClear">Clear</button>` : ''}
+      ${analysis.text && !analysis.busy ? `<button class="btn ghost" id="anCopy">Copy</button>` : ''}
       ${hasKey ? '' : `<span class="sync-state">Needs an API key — set one under Data.</span>`}
     </div>
   </div>`;
 }
 function wireAnalysis(el){
   const r = $('#anRun', el); if(r) r.onclick = runAnalysis;
-  const c = $('#anClear', el); if(c) c.onclick = () => { analysis = {text:'',at:'',busy:false,error:''}; renderDash(); };
+  const c = $('#anClear', el); if(c) c.onclick = () => { analysis = blankAnalysis(); renderDash(); };
+  const cp = $('#anCopy', el); if(cp) cp.onclick = async () => {
+    try{ await navigator.clipboard.writeText(analysis.text); toast('Copied.'); }
+    catch(e){ toast('Copying was blocked. Select the text instead.'); }
+  };
+}
+function blankAnalysis(){ return {text:'', at:'', busy:false, error:'', truncated:false}; }
+
+/* Repaint only the reading, so streaming does not rebuild the whole dashboard. */
+function paintAnalysis(){
+  const b = document.getElementById('anBody');
+  if(b) b.innerHTML = mdToHTML(analysis.text);
 }
 
 function buildPrompt(){
@@ -873,10 +894,33 @@ Then a short list of 3 to 6 specific questions worth raising with their clinicia
 Constraints: do not name diagnoses or state what a pattern means clinically. Do not give treatment, supplement, or dietary advice. Do not offer reassurance that something is fine, and do not imply anything is urgent. Describe what the numbers do and how confident that description can be, nothing more. Plain language, no preamble, no closing summary. Use markdown with ## headings, short paragraphs, and bullet lists.`;
 }
 
+/* Raise this if a reading still runs out of room. Sonnet 4.6 allows far more;
+   8000 is roughly 6000 words, which no panel set here has come close to. */
+const MAX_TOKENS = 8000;
+
+/* Pulls text deltas out of a chunk of server-sent events. Returns the leftover
+   partial line so the next chunk can finish it. */
+function consumeSSE(buf, st){
+  const lines = buf.split('\n');
+  const rest = lines.pop();
+  for(const line of lines){
+    if(!line.startsWith('data:')) continue;
+    const raw = line.slice(5).trim();
+    if(!raw || raw === '[DONE]') continue;
+    let ev;
+    try{ ev = JSON.parse(raw); }catch(e){ continue; }
+    if(ev.type === 'content_block_delta' && ev.delta && ev.delta.type === 'text_delta') st.text += ev.delta.text;
+    else if(ev.type === 'message_delta' && ev.delta && ev.delta.stop_reason) st.stop = ev.delta.stop_reason;
+    else if(ev.type === 'error') throw new Error((ev.error && ev.error.message) || 'The stream failed.');
+  }
+  return rest;
+}
+
 async function runAnalysis(){
   if(!S.draws.length){ toast('Add results first.'); return; }
-  analysis = {text:'', at:'', busy:true, error:''};
+  analysis = {...blankAnalysis(), busy:true};
   renderDash();
+  const st = {text:'', stop:''};
   try{
     const headers = {'content-type':'application/json'};
     const key = (S.apiKey || '').trim();
@@ -887,19 +931,38 @@ async function runAnalysis(){
     }
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method:'POST', headers,
-      body: JSON.stringify({model:'claude-sonnet-4-6', max_tokens:2000,
+      body: JSON.stringify({model:'claude-sonnet-4-6', max_tokens: MAX_TOKENS, stream:true,
         messages:[{role:'user', content: buildPrompt()}]})
     });
     if(!res.ok){
       const t = await res.text();
-      throw new Error(res.status === 401 ? 'The API key was rejected. Check it under Data.' : `API error ${res.status}. ${t.slice(0,180)}`);
+      throw new Error(res.status === 401 ? 'The API key was rejected. Check it under Data.'
+        : res.status === 429 ? 'Rate limited by the API. Wait a moment and run it again.'
+        : `API error ${res.status}. ${t.slice(0,180)}`);
     }
-    const data = await res.json();
-    const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('\n').trim();
+
+    if(res.body && typeof res.body.getReader === 'function'){
+      const reader = res.body.getReader(), dec = new TextDecoder();
+      let buf = '', painted = 0;
+      for(;;){
+        const {done, value} = await reader.read();
+        if(done) break;
+        buf = consumeSSE(buf + dec.decode(value, {stream:true}), st);
+        const now = Date.now();
+        if(now - painted > 120){ painted = now; analysis.text = st.text; paintAnalysis(); }
+      }
+      consumeSSE(buf + '\n', st);
+    }else{
+      /* no streaming reader available — read the whole SSE body at once */
+      consumeSSE((await res.text()) + '\n', st);
+    }
+
+    const text = st.text.trim();
     if(!text) throw new Error('The API returned nothing to show.');
-    analysis = {text, at: new Date().toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}), busy:false, error:''};
+    analysis = {text, busy:false, error:'', truncated: st.stop === 'max_tokens',
+      at: new Date().toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})};
   }catch(e){
-    analysis = {text:'', at:'', busy:false, error: e.message || 'The request failed.'};
+    analysis = {...blankAnalysis(), error: e.message || 'The request failed.'};
   }
   renderDash();
 }
@@ -1196,7 +1259,7 @@ function saveDraw(){
     toast('Draw saved.');
   }
   entryPanels.clear(); stash = null;
-  analysis = {text:'', at:'', busy:false, error:''};
+  analysis = blankAnalysis();
   save(); renderAll(); go('dash');
 }
 
