@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab record</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E8ECEA;
+  --card:#FBFCFB;
+  --ink:#0D1815;
+  --ink-2:#57665F;
+  --ink-3:#899690;
+  --rule:#C6D0CB;
+  --rule-2:#DCE3E0;
+  --lane:#DBE3DF;
+  --band:#CDDAD4;
+  --trace:#13454F;
+  --signal:#A63D18;
+  --display:'Archivo',system-ui,sans-serif;
+  --body:'Archivo',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;
+  padding-bottom:64px;
+}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--trace)}
+
+/* ---------- structural type ---------- */
+.eyebrow{
+  font-family:var(--display);font-variation-settings:'wdth' 118;
+  text-transform:uppercase;letter-spacing:.14em;font-size:10.5px;font-weight:600;
+  color:var(--ink-3);
+}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* ---------- shell ---------- */
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header.top{border-bottom:1px solid var(--rule);background:var(--paper);position:sticky;top:0;z-index:20}
+.masthead{display:flex;align-items:baseline;gap:14px;padding:18px 0 12px;flex-wrap:wrap}
+.wordmark{
+  font-family:var(--display);font-variation-settings:'wdth' 125;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;font-size:19px;margin:0;line-height:1;
+}
+.masthead .eyebrow{margin-left:auto}
+nav.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+.tab{
+  background:none;border:0;border-bottom:2px solid transparent;cursor:pointer;
+  padding:8px 13px 9px;white-space:nowrap;color:var(--ink-2);
+  font-family:var(--display);font-variation-settings:'wdth' 112;
+  text-transform:uppercase;letter-spacing:.1em;font-size:11px;font-weight:600;
+}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--signal)}
+.tab:focus-visible{outline:2px solid var(--trace);outline-offset:-2px}
+
+main{padding-top:26px}
+section[hidden]{display:none}
+
+/* ---------- specimen header ---------- */
+.specimen{border-bottom:1px solid var(--rule);padding-bottom:20px;margin-bottom:26px}
+.specimen-date{
+  font-family:var(--display);font-variation-settings:'wdth' 122;font-weight:700;
+  font-size:clamp(30px,6.5vw,46px);line-height:1;letter-spacing:-.01em;margin:6px 0 0;
+}
+.specimen-meta{display:flex;gap:28px;flex-wrap:wrap;margin-top:16px}
+.stat{min-width:0}
+.stat .v{font-family:var(--mono);font-size:20px;font-weight:500;display:block;line-height:1.1}
+.stat .v.flag{color:var(--signal)}
+.stat .k{display:block;margin-top:3px}
+
+/* ---------- panel blocks ---------- */
+.panel{margin-bottom:26px}
+.panel-head{display:flex;align-items:center;gap:12px;margin-bottom:2px}
+.panel-head .rule{flex:1;height:1px;background:var(--rule)}
+.rows{background:var(--card);border:1px solid var(--rule-2)}
+.row{
+  display:grid;grid-template-columns:minmax(0,1.5fr) 86px 74px minmax(120px,1fr) 96px;
+  align-items:center;gap:10px;padding:9px 14px;border-top:1px solid var(--rule-2);
+}
+.rows .row:first-child{border-top:0}
+.row .name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .val{font-family:var(--mono);font-size:16px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
+.row .val.out{color:var(--signal)}
+.row .unit{font-size:11.5px;color:var(--ink-3);font-family:var(--mono)}
+.row .refs{font-size:11.5px;color:var(--ink-3);font-family:var(--mono);text-align:right}
+.row .delta{font-size:11.5px;font-family:var(--mono);color:var(--ink-2);text-align:right}
+@media(max-width:720px){
+  .row{grid-template-columns:minmax(0,1fr) 78px 66px;grid-template-areas:'n v u' 'l l l';row-gap:7px}
+  .row .name{grid-area:n}.row .val{grid-area:v}.row .unit{grid-area:u}
+  .row .lane-wrap{grid-area:l}
+  .row .refs,.row .delta{display:none}
+}
+
+/* lane marker */
+.lane-wrap{position:relative;height:16px;display:flex;align-items:center}
+.lane-track{position:absolute;left:0;right:0;height:2px;background:var(--lane)}
+.lane-band{position:absolute;height:9px;background:var(--band);top:50%;transform:translateY(-50%)}
+.lane-tick{position:absolute;width:2px;height:15px;background:var(--ink);top:50%;transform:translate(-1px,-50%)}
+.lane-tick.out{background:var(--signal);width:3px}
+.lane-none{font-size:11px;color:var(--ink-3);font-family:var(--mono)}
+
+/* ---------- trends ---------- */
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:20px}
+.chip{
+  border:1px solid var(--rule);background:transparent;cursor:pointer;padding:5px 11px;
+  font-family:var(--display);font-variation-settings:'wdth' 110;text-transform:uppercase;
+  letter-spacing:.09em;font-size:10.5px;font-weight:600;color:var(--ink-2);border-radius:2px;
+}
+.chip:hover{border-color:var(--ink-3);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.chip:focus-visible{outline:2px solid var(--trace);outline-offset:2px}
+input[type="search"],input[type="text"],input[type="date"],input[type="number"],select,textarea{
+  background:var(--card);border:1px solid var(--rule);padding:7px 10px;border-radius:2px;
+  font-size:14px;color:var(--ink);
+}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--trace);outline-offset:-1px;border-color:var(--trace)}
+input[type="number"],input[type="date"]{font-family:var(--mono)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.chart-card{background:var(--card);border:1px solid var(--rule-2);padding:13px 14px 8px}
+.cc-head{display:flex;align-items:baseline;gap:8px;margin-bottom:9px}
+.cc-name{font-weight:600;font-size:13.5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cc-unit{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);white-space:nowrap}
+.cc-last{margin-left:auto;font-family:var(--mono);font-size:15px;font-weight:500}
+.cc-last.out{color:var(--signal)}
+.cc-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:5px;padding-top:7px;border-top:1px solid var(--rule-2)}
+.cc-ref{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.linkbtn{background:none;border:0;padding:2px 0;cursor:pointer;font-size:10.5px;color:var(--ink-3);text-decoration:underline;text-underline-offset:2px;font-family:var(--display);letter-spacing:.05em;text-transform:uppercase;font-weight:600}
+.linkbtn:hover{color:var(--signal)}
+svg.trend{display:block;width:100%;height:auto;overflow:visible}
+.trend .band{fill:var(--band)}
+.trend .gridline{stroke:var(--rule-2);stroke-width:1}
+.trend .axis{stroke:var(--rule);stroke-width:1}
+.trend .line{fill:none;stroke:var(--trace);stroke-width:1.75;stroke-linejoin:round;stroke-linecap:round}
+.trend .dot{fill:var(--card);stroke:var(--trace);stroke-width:1.75}
+.trend .dot.out{fill:var(--signal);stroke:var(--signal)}
+.trend .tlabel{font-family:var(--mono);font-size:9px;fill:var(--ink-3)}
+.trend .hit{fill:transparent;cursor:pointer}
+.ovr{display:flex;gap:6px;align-items:center;margin-top:8px;padding-top:8px;border-top:1px dashed var(--rule)}
+.ovr input{width:74px;padding:4px 6px;font-size:12px}
+
+/* ---------- forms ---------- */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:11px 16px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:12px;color:var(--ink-2)}
+.field .hint{font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+.entry-row{display:grid;grid-template-columns:minmax(0,1fr) 92px 62px;gap:8px;align-items:center;padding:6px 0;border-top:1px solid var(--rule-2)}
+.entry-row:first-of-type{border-top:0}
+.entry-row .en{font-size:13.5px;min-width:0}
+.entry-row .eu{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.entry-row input{text-align:right;font-family:var(--mono)}
+.entry-row input.out{border-color:var(--signal);color:var(--signal)}
+.btn{
+  background:var(--ink);color:var(--paper);border:1px solid var(--ink);cursor:pointer;
+  padding:9px 18px;border-radius:2px;font-family:var(--display);
+  font-variation-settings:'wdth' 112;text-transform:uppercase;letter-spacing:.1em;
+  font-size:11px;font-weight:600;
+}
+.btn:hover{background:#000}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--rule-2)}
+.btn.danger{background:transparent;color:var(--signal);border-color:var(--signal)}
+.btn.danger:hover{background:var(--signal);color:var(--card)}
+.btn:focus-visible{outline:2px solid var(--trace);outline-offset:2px}
+.btnrow{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:20px}
+.block{background:var(--card);border:1px solid var(--rule-2);padding:17px 18px;margin-bottom:16px}
+
+/* ---------- data table ---------- */
+table.draws{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--rule-2)}
+table.draws th{
+  text-align:left;padding:8px 12px;border-bottom:1px solid var(--rule);
+  font-family:var(--display);font-variation-settings:'wdth' 112;text-transform:uppercase;
+  letter-spacing:.1em;font-size:10px;font-weight:600;color:var(--ink-3);
+}
+table.draws td{padding:8px 12px;border-top:1px solid var(--rule-2);font-size:13.5px;vertical-align:middle}
+table.draws td.d{font-family:var(--mono);white-space:nowrap}
+table.draws td.act{text-align:right;white-space:nowrap}
+table.draws .linkbtn{margin-left:10px}
+
+.empty{border:1px dashed var(--rule);padding:34px 22px;text-align:center;color:var(--ink-2)}
+.empty p{margin:0 0 14px}
+.note{font-size:12.5px;color:var(--ink-2);margin:10px 0 0}
+.toast{
+  position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);
+  color:var(--paper);padding:10px 18px;border-radius:2px;font-size:13px;z-index:60;
+  opacity:0;pointer-events:none;transition:opacity .18s
+}
+.toast.show{opacity:1}
+
+@media (prefers-reduced-motion:no-preference){
+  .trend .line{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:draw .55s ease-out forwards}
+  @keyframes draw{to{stroke-dashoffset:0}}
+}
+@media print{
+  header.top,nav.tabs,.toolbar,.btnrow,.ovr,.linkbtn{display:none!important}
+  body{background:#fff;padding:0}
+  .rows,.chart-card,.block{border-color:#bbb}
+  .panel{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="masthead">
+      <h1 class="wordmark">Lab record</h1>
+      <span class="eyebrow" id="mastheadMeta"></span>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab" role="tab" data-view="latest" aria-selected="true">Latest</button>
+      <button class="tab" role="tab" data-view="trends" aria-selected="false">Trends</button>
+      <button class="tab" role="tab" data-view="add" aria-selected="false">Add result</button>
+      <button class="tab" role="tab" data-view="data" aria-selected="false">Data</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="view-latest" role="tabpanel"></section>
+  <section id="view-trends" role="tabpanel" hidden></section>
+  <section id="view-add" role="tabpanel" hidden></section>
+  <section id="view-data" role="tabpanel" hidden></section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =========================================================================
+   CATALOG
+   ref: {lo, hi}  — null bound means "no limit on that side"
+   ref may instead be {male:{lo,hi}, female:{lo,hi}} for sex-specific intervals
+   ref: null      — tracked but no reference interval (e.g. weight)
+   dlo/dhi        — display bounds used to size the lane when a bound is open
+   ========================================================================= */
+const PANELS = [
+  {key:'bmp',    name:'Basic metabolic'},
+  {key:'hep',    name:'Liver'},
+  {key:'cbc',    name:'Complete blood count'},
+  {key:'diff',   name:'Differential'},
+  {key:'lipid',  name:'Lipids'},
+  {key:'thy',    name:'Thyroid'},
+  {key:'gly',    name:'Glycemic'},
+  {key:'pros',   name:'Prostate'},
+  {key:'iron',   name:'Iron studies'},
+  {key:'vit',    name:'Vitamins & minerals'},
+  {key:'inf',    name:'Inflammation & risk'},
+  {key:'vitals', name:'Vitals'}
+];
+
+const A = [
+  // ---- Basic metabolic ----
+  {k:'glucose',  p:'bmp', n:'Glucose, fasting',  u:'mg/dL', d:0, ref:{lo:70,hi:99}},
+  {k:'bun',      p:'bmp', n:'BUN',               u:'mg/dL', d:0, ref:{lo:7,hi:20}},
+  {k:'creat',    p:'bmp', n:'Creatinine',        u:'mg/dL', d:2, ref:{male:{lo:0.76,hi:1.27},female:{lo:0.57,hi:1.00}}},
+  {k:'bcratio',  p:'bmp', n:'BUN/creatinine ratio', u:'',   d:0, ref:{lo:9,hi:20}},
+  {k:'egfr',     p:'bmp', n:'eGFR',              u:'mL/min/1.73m²', d:0, ref:{lo:60,hi:null}, dhi:130},
+  {k:'sodium',   p:'bmp', n:'Sodium',            u:'mmol/L',d:0, ref:{lo:134,hi:144}},
+  {k:'potassium',p:'bmp', n:'Potassium',         u:'mmol/L',d:1, ref:{lo:3.5,hi:5.2}},
+  {k:'chloride', p:'bmp', n:'Chloride',          u:'mmol/L',d:0, ref:{lo:96,hi:106}},
+  {k:'co2',      p:'bmp', n:'CO₂ (bicarbonate)', u:'mmol/L',d:0, ref:{lo:20,hi:29}},
+  {k:'calcium',  p:'bmp', n:'Calcium',           u:'mg/dL', d:1, ref:{lo:8.7,hi:10.2}},
+  // ---- Liver (CMP adds these to the BMP) ----
+  {k:'protein',  p:'hep', n:'Protein, total',    u:'g/dL',  d:1, ref:{lo:6.0,hi:8.5}},
+  {k:'albumin',  p:'hep', n:'Albumin',           u:'g/dL',  d:1, ref:{lo:3.9,hi:4.9}},
+  {k:'globulin', p:'hep', n:'Globulin, total',   u:'g/dL',  d:1, ref:{lo:1.5,hi:4.5}},
+  {k:'agratio',  p:'hep', n:'A/G ratio',         u:'',      d:1, ref:{lo:1.2,hi:2.2}},
+  {k:'bili',     p:'hep', n:'Bilirubin, total',  u:'mg/dL', d:1, ref:{lo:0.0,hi:1.2}},
+  {k:'alp',      p:'hep', n:'Alkaline phosphatase',u:'IU/L',d:0, ref:{lo:44,hi:121}},
+  {k:'ast',      p:'hep', n:'AST (SGOT)',        u:'IU/L',  d:0, ref:{lo:0,hi:40}},
+  {k:'alt',      p:'hep', n:'ALT (SGPT)',        u:'IU/L',  d:0, ref:{lo:0,hi:44}},
+  // ---- CBC ----
+  {k:'wbc',      p:'cbc', n:'WBC',               u:'K/µL',  d:1, ref:{lo:3.4,hi:10.8}},
+  {k:'rbc',      p:'cbc', n:'RBC',               u:'M/µL',  d:2, ref:{male:{lo:4.14,hi:5.80},female:{lo:3.77,hi:5.28}}},
+  {k:'hgb',      p:'cbc', n:'Hemoglobin',        u:'g/dL',  d:1, ref:{male:{lo:13.0,hi:17.7},female:{lo:11.1,hi:15.9}}},
+  {k:'hct',      p:'cbc', n:'Hematocrit',        u:'%',     d:1, ref:{male:{lo:37.5,hi:51.0},female:{lo:34.0,hi:46.6}}},
+  {k:'mcv',      p:'cbc', n:'MCV',               u:'fL',    d:0, ref:{lo:79,hi:97}},
+  {k:'mch',      p:'cbc', n:'MCH',               u:'pg',    d:1, ref:{lo:26.6,hi:33.0}},
+  {k:'mchc',     p:'cbc', n:'MCHC',              u:'g/dL',  d:1, ref:{lo:31.5,hi:35.7}},
+  {k:'rdw',      p:'cbc', n:'RDW',               u:'%',     d:1, ref:{lo:11.6,hi:15.4}},
+  {k:'plt',      p:'cbc', n:'Platelets',         u:'K/µL',  d:0, ref:{lo:150,hi:450}},
+  {k:'mpv',      p:'cbc', n:'MPV',               u:'fL',    d:1, ref:{lo:7.5,hi:12.5}},
+  // ---- Differential ----
+  {k:'neutA',    p:'diff',n:'Neutrophils, absolute', u:'K/µL', d:1, ref:{lo:1.4,hi:7.0}},
+  {k:'lymphA',   p:'diff',n:'Lymphocytes, absolute', u:'K/µL', d:1, ref:{lo:0.7,hi:3.1}},
+  {k:'monoA',    p:'diff',n:'Monocytes, absolute',   u:'K/µL', d:1, ref:{lo:0.1,hi:0.9}},
+  {k:'eosA',     p:'diff',n:'Eosinophils, absolute', u:'K/µL', d:1, ref:{lo:0.0,hi:0.4}},
+  {k:'basoA',    p:'diff',n:'Basophils, absolute',   u:'K/µL', d:1, ref:{lo:0.0,hi:0.2}},
+  {k:'neutP',    p:'diff',n:'Neutrophils',       u:'%',     d:0, ref:{lo:40,hi:74}},
+  {k:'lymphP',   p:'diff',n:'Lymphocytes',       u:'%',     d:0, ref:{lo:14,hi:46}},
+  {k:'monoP',    p:'diff',n:'Monocytes',         u:'%',     d:0, ref:{lo:4,hi:13}},
+  {k:'eosP',     p:'diff',n:'Eosinophils',       u:'%',     d:0, ref:{lo:0,hi:7}},
+  {k:'basoP',    p:'diff',n:'Basophils',         u:'%',     d:0, ref:{lo:0,hi:3}},
+  // ---- Lipids ----
+  {k:'chol',     p:'lipid',n:'Cholesterol, total',u:'mg/dL',d:0, ref:{lo:null,hi:200}, dlo:110},
+  {k:'ldl',      p:'lipid',n:'LDL cholesterol',  u:'mg/dL', d:0, ref:{lo:null,hi:100}, dlo:30},
+  {k:'hdl',      p:'lipid',n:'HDL cholesterol',  u:'mg/dL', d:0, ref:{male:{lo:40,hi:null},female:{lo:50,hi:null}}, dhi:100},
+  {k:'trig',     p:'lipid',n:'Triglycerides',    u:'mg/dL', d:0, ref:{lo:null,hi:150}, dlo:30},
+  {k:'nonhdl',   p:'lipid',n:'Non-HDL cholesterol',u:'mg/dL',d:0,ref:{lo:null,hi:130}, dlo:50},
+  {k:'cholhdl',  p:'lipid',n:'Chol/HDL ratio',   u:'',      d:1, ref:{lo:null,hi:5.0}, dlo:1},
+  {k:'apob',     p:'lipid',n:'Apolipoprotein B', u:'mg/dL', d:0, ref:{lo:null,hi:90},  dlo:30},
+  {k:'lpa',      p:'lipid',n:'Lipoprotein(a)',   u:'nmol/L',d:0, ref:{lo:null,hi:75},  dlo:0},
+  // ---- Thyroid ----
+  {k:'tsh',      p:'thy', n:'TSH',               u:'µIU/mL',d:2, ref:{lo:0.45,hi:4.50}},
+  {k:'ft4',      p:'thy', n:'Free T4',           u:'ng/dL', d:2, ref:{lo:0.82,hi:1.77}},
+  {k:'ft3',      p:'thy', n:'Free T3',           u:'pg/mL', d:1, ref:{lo:2.0,hi:4.4}},
+  {k:'tpo',      p:'thy', n:'TPO antibodies',    u:'IU/mL', d:0, ref:{lo:null,hi:9}, dlo:0},
+  // ---- Glycemic ----
+  {k:'a1c',      p:'gly', n:'Hemoglobin A1c',    u:'%',     d:1, ref:{lo:null,hi:5.7}, dlo:4.0},
+  {k:'insulin',  p:'gly', n:'Insulin, fasting',  u:'µIU/mL',d:1, ref:{lo:2.6,hi:24.9}},
+  // ---- Prostate ----
+  {k:'psa',      p:'pros',n:'PSA, total',        u:'ng/mL', d:2, ref:{lo:null,hi:4.0}, dlo:0,
+   note:'Common cutoff. Age-specific thresholds are lower for men under 60 — override if your lab uses one.'},
+  {k:'psafree',  p:'pros',n:'PSA, free',         u:'%',     d:0, ref:{lo:25,hi:null}, dhi:50},
+  // ---- Iron ----
+  {k:'iron',     p:'iron',n:'Iron, total',       u:'µg/dL', d:0, ref:{lo:38,hi:169}},
+  {k:'tibc',     p:'iron',n:'TIBC',              u:'µg/dL', d:0, ref:{lo:250,hi:450}},
+  {k:'ironsat',  p:'iron',n:'Iron saturation',   u:'%',     d:0, ref:{lo:15,hi:55}},
+  {k:'ferritin', p:'iron',n:'Ferritin',          u:'ng/mL', d:0, ref:{male:{lo:30,hi:400},female:{lo:15,hi:150}}},
+  // ---- Vitamins & minerals ----
+  {k:'vitd',     p:'vit', n:'Vitamin D, 25-OH',  u:'ng/mL', d:1, ref:{lo:30,hi:100}},
+  {k:'b12',      p:'vit', n:'Vitamin B12',       u:'pg/mL', d:0, ref:{lo:232,hi:1245}},
+  {k:'folate',   p:'vit', n:'Folate',            u:'ng/mL', d:1, ref:{lo:3.0,hi:null}, dhi:25},
+  {k:'mag',      p:'vit', n:'Magnesium',         u:'mg/dL', d:1, ref:{lo:1.6,hi:2.3}},
+  {k:'uric',     p:'vit', n:'Uric acid',         u:'mg/dL', d:1, ref:{male:{lo:3.8,hi:8.4},female:{lo:2.5,hi:7.1}}},
+  {k:'phos',     p:'vit', n:'Phosphorus',        u:'mg/dL', d:1, ref:{lo:2.5,hi:4.5}},
+  // ---- Inflammation & risk ----
+  {k:'hscrp',    p:'inf', n:'hs-CRP',            u:'mg/L',  d:2, ref:{lo:null,hi:3.0}, dlo:0},
+  {k:'homocys',  p:'inf', n:'Homocysteine',      u:'µmol/L',d:1, ref:{lo:null,hi:15},  dlo:4},
+  {k:'esr',      p:'inf', n:'ESR',               u:'mm/hr', d:0, ref:{lo:null,hi:20},  dlo:0},
+  // ---- Vitals ----
+  {k:'sbp',      p:'vitals',n:'Systolic BP',     u:'mmHg',  d:0, ref:{lo:90,hi:120}},
+  {k:'dbp',      p:'vitals',n:'Diastolic BP',    u:'mmHg',  d:0, ref:{lo:60,hi:80}},
+  {k:'hr',       p:'vitals',n:'Resting heart rate',u:'bpm', d:0, ref:{lo:60,hi:100}},
+  {k:'spo2',     p:'vitals',n:'SpO₂',            u:'%',     d:0, ref:{lo:95,hi:null}, dhi:100},
+  {k:'weight',   p:'vitals',n:'Weight',          u:'lb',    d:1, ref:null},
+  {k:'waist',    p:'vitals',n:'Waist',           u:'in',    d:1, ref:null}
+];
+
+// Order sets offered on the entry form. A draw can mix any of them.
+const ORDERS = [
+  {key:'bmp',   label:'Basic metabolic panel',      panels:['bmp']},
+  {key:'cmp',   label:'Comprehensive metabolic panel', panels:['bmp','hep']},
+  {key:'cbcd',  label:'CBC with differential',      panels:['cbc','diff']},
+  {key:'cbc',   label:'CBC without differential',   panels:['cbc']},
+  {key:'lipid', label:'Lipid panel',                panels:['lipid']},
+  {key:'thy',   label:'Thyroid panel',              panels:['thy']},
+  {key:'gly',   label:'Glycemic',                   panels:['gly']},
+  {key:'pros',  label:'Prostate',                   panels:['pros']},
+  {key:'iron',  label:'Iron studies',               panels:['iron']},
+  {key:'vit',   label:'Vitamins & minerals',        panels:['vit']},
+  {key:'inf',   label:'Inflammation & risk',        panels:['inf']},
+  {key:'vitals',label:'Vitals',                     panels:['vitals']}
+];
+
+const BY_KEY = Object.fromEntries(A.map(a => [a.k, a]));
+const PANEL_NAME = Object.fromEntries(PANELS.map(p => [p.key, p.name]));
+</script>
+
+<script>
+/* ============================ state ============================ */
+const KEY = 'labrecord.v1';
+let S = load();
+let view = 'latest';
+let filterPanel = 'all';
+let filterText = '';
+let editingId = null;
+let entryPanels = new Set();
+
+function load(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(raw){
+      const s = JSON.parse(raw);
+      s.draws ||= []; s.overrides ||= {}; s.profile ||= {sex:'male'};
+      return s;
+    }
+  }catch(e){ console.warn('Could not read saved data', e); }
+  return {schema:1, profile:{sex:'male'}, overrides:{}, draws:[]};
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(S)); }
+  catch(e){ toast('Storage is full — export a backup and remove old draws.'); }
+}
+
+/* ============================ helpers ============================ */
+const $ = (s,r=document) => r.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function toast(msg){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._t); t._t = setTimeout(()=>t.classList.remove('show'), 2400);
+}
+function fmt(v, dec){
+  if(v === null || v === undefined || Number.isNaN(v)) return '—';
+  return Number(v).toFixed(dec);
+}
+function fmtDate(iso){
+  const [y,m,d] = iso.split('-');
+  return `${y}-${m}-${d}`;
+}
+function longDate(iso){
+  const dt = new Date(iso + 'T12:00:00');
+  return dt.toLocaleDateString(undefined, {year:'numeric', month:'long', day:'numeric'});
+}
+function daysBetween(a, b){
+  return Math.round((new Date(b+'T12:00:00') - new Date(a+'T12:00:00')) / 86400000);
+}
+
+/* Reference interval for an analyte, applying sex and any user override. */
+function refFor(a){
+  if(S.overrides[a.k]) return {...S.overrides[a.k], custom:true};
+  if(!a.ref) return null;
+  if(a.ref.male || a.ref.female) return {...(a.ref[S.profile.sex] || a.ref.male), sexed:true};
+  return {...a.ref};
+}
+function refText(a){
+  const r = refFor(a);
+  if(!r) return 'no interval';
+  if(r.lo !== null && r.hi !== null) return `${fmt(r.lo,a.d)}–${fmt(r.hi,a.d)}`;
+  if(r.hi !== null) return `< ${fmt(r.hi,a.d)}`;
+  return `> ${fmt(r.lo,a.d)}`;
+}
+function status(v, r){
+  if(v === null || v === undefined || !r) return 'in';
+  if(r.hi !== null && r.hi !== undefined && v > r.hi) return 'high';
+  if(r.lo !== null && r.lo !== undefined && v < r.lo) return 'low';
+  return 'in';
+}
+/* Display bounds for the lane, so an open-ended interval still renders. */
+function laneDomain(a, r){
+  if(!r) return null;
+  let lo = r.lo, hi = r.hi;
+  if(lo !== null && hi !== null){
+    const span = (hi - lo) || Math.abs(hi) * 0.2 || 1;
+    return [lo - span*0.55, hi + span*0.55];
+  }
+  if(hi !== null) return [a.dlo !== undefined ? a.dlo : 0, hi * 1.55];
+  return [Math.max(0, lo * 0.55), a.dhi !== undefined ? a.dhi : lo * 1.85];
+}
+
+const sortedDraws = () => [...S.draws].sort((x,y)=> x.date < y.date ? 1 : -1); // newest first
+const seriesFor = k => S.draws
+  .filter(dw => typeof dw.values[k] === 'number')
+  .map(dw => ({date: dw.date, v: dw.values[k]}))
+  .sort((x,y)=> x.date < y.date ? -1 : 1); // oldest first
+const trackedKeys = () => {
+  const s = new Set();
+  S.draws.forEach(dw => Object.keys(dw.values).forEach(k => { if(BY_KEY[k]) s.add(k); }));
+  return A.filter(a => s.has(a.k));
+};
+
+/* ============================ lane marker ============================ */
+function laneHTML(a, v){
+  const r = refFor(a), dom = laneDomain(a, r);
+  if(!dom || v === null || v === undefined) return `<div class="lane-wrap"><span class="lane-none">—</span></div>`;
+  const [d0, d1] = dom, w = d1 - d0;
+  const pct = x => Math.max(0, Math.min(100, ((x - d0) / w) * 100));
+  const bLo = r.lo !== null ? pct(r.lo) : 0;
+  const bHi = r.hi !== null ? pct(r.hi) : 100;
+  const st = status(v, r);
+  const pos = pct(v);
+  return `<div class="lane-wrap" title="${esc(refText(a))}">
+    <span class="lane-track"></span>
+    <span class="lane-band" style="left:${bLo}%;width:${Math.max(0.5, bHi-bLo)}%"></span>
+    <span class="lane-tick ${st!=='in'?'out':''}" style="left:${pos}%"></span>
+  </div>`;
+}
+
+/* ============================ trend chart ============================ */
+function trendSVG(a, pts){
+  const W = 300, H = 108, L = 36, R = 8, T = 8, B = 18;
+  const iw = W - L - R, ih = H - T - B;
+  const r = refFor(a);
+
+  const vals = pts.map(p => p.v);
+  const cands = [...vals];
+  if(r){ if(r.lo !== null && r.lo !== undefined) cands.push(r.lo); if(r.hi !== null && r.hi !== undefined) cands.push(r.hi); }
+  let yMin = Math.min(...cands), yMax = Math.max(...cands);
+  if(yMin === yMax){ const pad = Math.abs(yMin) * 0.1 || 1; yMin -= pad; yMax += pad; }
+  const pad = (yMax - yMin) * 0.12;
+  yMin -= pad; yMax += pad;
+  const Y = v => T + ih - ((v - yMin) / (yMax - yMin)) * ih;
+
+  const times = pts.map(p => new Date(p.date + 'T12:00:00').getTime());
+  const t0 = Math.min(...times), t1 = Math.max(...times);
+  const X = t => (t1 === t0) ? L + iw/2 : L + ((t - t0) / (t1 - t0)) * iw;
+
+  let band = '';
+  if(r){
+    const top = Y(r.hi !== null && r.hi !== undefined ? Math.min(r.hi, yMax) : yMax);
+    const bot = Y(r.lo !== null && r.lo !== undefined ? Math.max(r.lo, yMin) : yMin);
+    band = `<rect class="band" x="${L}" y="${top}" width="${iw}" height="${Math.max(1, bot-top)}"/>`;
+  }
+  const d = pts.map((p,i) => `${i?'L':'M'}${X(times[i]).toFixed(1)},${Y(p.v).toFixed(1)}`).join(' ');
+  const len = pts.length > 1 ? iw * 1.6 : 0;
+  const line = pts.length > 1 ? `<path class="line" style="--len:${len.toFixed(0)}" d="${d}"/>` : '';
+
+  const dots = pts.map((p,i) => {
+    const st = status(p.v, r);
+    return `<circle class="dot ${st!=='in'?'out':''}" cx="${X(times[i]).toFixed(1)}" cy="${Y(p.v).toFixed(1)}" r="3">
+      <title>${esc(fmtDate(p.date))} · ${fmt(p.v, a.d)} ${esc(a.u)}${st!=='in' ? ' · '+st : ''}</title>
+    </circle>`;
+  }).join('');
+
+  const ax = `<line class="axis" x1="${L}" y1="${T+ih}" x2="${W-R}" y2="${T+ih}"/>`;
+  const yl = `<text class="tlabel" x="${L-5}" y="${T+4}" text-anchor="end">${fmt(yMax, a.d)}</text>
+              <text class="tlabel" x="${L-5}" y="${T+ih}" text-anchor="end">${fmt(yMin, a.d)}</text>`;
+  const short = iso => iso.slice(2,7);
+  const xl = pts.length > 1
+    ? `<text class="tlabel" x="${L}" y="${H-5}">${short(pts[0].date)}</text>
+       <text class="tlabel" x="${W-R}" y="${H-5}" text-anchor="end">${short(pts[pts.length-1].date)}</text>`
+    : `<text class="tlabel" x="${L+iw/2}" y="${H-5}" text-anchor="middle">${short(pts[0].date)}</text>`;
+
+  return `<svg class="trend" viewBox="0 0 ${W} ${H}" role="img"
+    aria-label="${esc(a.n)} over time, ${pts.length} result${pts.length>1?'s':''}">
+    ${band}${ax}${yl}${line}${dots}${xl}</svg>`;
+}
+
+/* ============================ views ============================ */
+function renderMasthead(){
+  const n = S.draws.length;
+  if(!n){ $('#mastheadMeta').textContent = 'no results yet'; return; }
+  const ds = sortedDraws();
+  $('#mastheadMeta').textContent = `${n} draw${n>1?'s':''} · ${ds[n-1].date} to ${ds[0].date}`;
+}
+
+function renderLatest(){
+  const el = $('#view-latest');
+  if(!S.draws.length){
+    el.innerHTML = `<div class="empty"><p>Nothing recorded yet. Start with your most recent blood work — you can backfill older draws afterward.</p>
+      <button class="btn" data-goto="add">Add result</button></div>`;
+    return;
+  }
+  const ds = sortedDraws(), latest = ds[0], prev = ds[1] || null;
+  const keys = Object.keys(latest.values).filter(k => BY_KEY[k]);
+  const outCount = keys.filter(k => status(latest.values[k], refFor(BY_KEY[k])) !== 'in').length;
+
+  let html = `<div class="specimen">
+    <span class="eyebrow">Most recent draw${latest.lab ? ' · ' + esc(latest.lab) : ''}</span>
+    <h2 class="specimen-date">${longDate(latest.date)}</h2>
+    <div class="specimen-meta">
+      <div class="stat"><span class="v">${keys.length}</span><span class="k eyebrow">analytes</span></div>
+      <div class="stat"><span class="v ${outCount?'flag':''}">${outCount}</span><span class="k eyebrow">outside interval</span></div>
+      ${prev ? `<div class="stat"><span class="v">${daysBetween(prev.date, latest.date)}</span><span class="k eyebrow">days since previous</span></div>` : ''}
+    </div>
+    ${latest.note ? `<p class="note">${esc(latest.note)}</p>` : ''}
+  </div>`;
+
+  PANELS.forEach(p => {
+    const items = A.filter(a => a.p === p.key && keys.includes(a.k));
+    if(!items.length) return;
+    html += `<div class="panel"><div class="panel-head"><span class="eyebrow">${esc(p.name)}</span><span class="rule"></span></div><div class="rows">`;
+    items.forEach(a => {
+      const v = latest.values[a.k], r = refFor(a), st = status(v, r);
+      const pv = prev && typeof prev.values[a.k] === 'number' ? prev.values[a.k] : null;
+      let delta = '';
+      if(pv !== null){
+        const dv = v - pv;
+        const arrow = dv > 0 ? '▲' : dv < 0 ? '▼' : '·';
+        delta = `${arrow} ${fmt(Math.abs(dv), a.d)}`;
+      }
+      html += `<div class="row">
+        <span class="name">${esc(a.n)}</span>
+        <span class="val ${st!=='in'?'out':''}">${fmt(v, a.d)}</span>
+        <span class="unit">${esc(a.u)}</span>
+        ${laneHTML(a, v)}
+        <span class="refs">${esc(refText(a))}</span>
+        <span class="delta">${delta}</span>
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+  el.innerHTML = html;
+}
+
+function renderTrends(){
+  const el = $('#view-trends');
+  const tracked = trackedKeys();
+  if(!tracked.length){
+    el.innerHTML = `<div class="empty"><p>Trends appear once you have results on file. One draw gives you a baseline; two gives you a direction.</p>
+      <button class="btn" data-goto="add">Add result</button></div>`;
+    return;
+  }
+  const panelsPresent = PANELS.filter(p => tracked.some(a => a.p === p.key));
+  let html = `<div class="toolbar">
+    <button class="chip" data-panel="all" aria-pressed="${filterPanel==='all'}">All</button>
+    ${panelsPresent.map(p => `<button class="chip" data-panel="${p.key}" aria-pressed="${filterPanel===p.key}">${esc(p.name)}</button>`).join('')}
+    <input type="search" id="trendSearch" placeholder="Filter by name" value="${esc(filterText)}" style="margin-left:auto;min-width:170px">
+  </div>`;
+
+  const shown = tracked.filter(a =>
+    (filterPanel === 'all' || a.p === filterPanel) &&
+    (!filterText || a.n.toLowerCase().includes(filterText.toLowerCase()))
+  );
+  if(!shown.length){
+    html += `<div class="empty"><p>No analytes match that filter.</p></div>`;
+    el.innerHTML = html; wireTrends(); return;
+  }
+
+  html += `<div class="grid">`;
+  shown.forEach(a => {
+    const pts = seriesFor(a.k);
+    const last = pts[pts.length-1];
+    const r = refFor(a), st = status(last.v, r);
+    html += `<div class="chart-card">
+      <div class="cc-head">
+        <span class="cc-name">${esc(a.n)}</span>
+        <span class="cc-unit">${esc(a.u)}</span>
+        <span class="cc-last ${st!=='in'?'out':''}">${fmt(last.v, a.d)}</span>
+      </div>
+      ${trendSVG(a, pts)}
+      <div class="cc-foot">
+        <span class="cc-ref">ref ${esc(refText(a))}${r && r.custom ? ' (yours)' : ''} · n=${pts.length}</span>
+        <button class="linkbtn" data-ovr="${a.k}">Set range</button>
+      </div>
+      ${a.note ? `<p class="note" style="font-size:11px">${esc(a.note)}</p>` : ''}
+      <div class="ovr" id="ovr-${a.k}" hidden>
+        <input type="number" step="any" id="ovrlo-${a.k}" placeholder="low" value="${r && r.lo !== null && r.lo !== undefined ? r.lo : ''}">
+        <input type="number" step="any" id="ovrhi-${a.k}" placeholder="high" value="${r && r.hi !== null && r.hi !== undefined ? r.hi : ''}">
+        <button class="linkbtn" data-ovrsave="${a.k}">Save</button>
+        <button class="linkbtn" data-ovrclear="${a.k}">Use default</button>
+      </div>
+    </div>`;
+  });
+  html += `</div>`;
+  el.innerHTML = html;
+  wireTrends();
+}
+
+function wireTrends(){
+  const el = $('#view-trends');
+  el.querySelectorAll('[data-panel]').forEach(b => b.onclick = () => { filterPanel = b.dataset.panel; renderTrends(); });
+  const s = $('#trendSearch');
+  if(s) s.oninput = () => {
+    filterText = s.value;
+    renderTrends();
+    const f = $('#trendSearch'); if(f){ f.focus(); f.setSelectionRange(f.value.length, f.value.length); }
+  };
+  el.querySelectorAll('[data-ovr]').forEach(b => b.onclick = () => {
+    const box = $('#ovr-' + b.dataset.ovr); box.hidden = !box.hidden;
+  });
+  el.querySelectorAll('[data-ovrsave]').forEach(b => b.onclick = () => {
+    const k = b.dataset.ovrsave;
+    const lo = $('#ovrlo-'+k).value.trim(), hi = $('#ovrhi-'+k).value.trim();
+    if(lo === '' && hi === ''){ toast('Enter at least one bound.'); return; }
+    S.overrides[k] = {lo: lo === '' ? null : Number(lo), hi: hi === '' ? null : Number(hi)};
+    save(); renderAll(); toast('Reference interval updated.');
+  });
+  el.querySelectorAll('[data-ovrclear]').forEach(b => b.onclick = () => {
+    delete S.overrides[b.dataset.ovrclear]; save(); renderAll(); toast('Back to the default interval.');
+  });
+}
+
+function renderAdd(){
+  const el = $('#view-add');
+  const draw = editingId ? S.draws.find(d => d.id === editingId) : null;
+  const today = new Date().toISOString().slice(0,10);
+
+  if(draw && !entryPanels.size){
+    const present = new Set(Object.keys(draw.values).map(k => BY_KEY[k] && BY_KEY[k].p).filter(Boolean));
+    ORDERS.forEach(o => { if(o.panels.every(p => present.has(p))) o.panels.forEach(p => entryPanels.add(p)); });
+    present.forEach(p => entryPanels.add(p));
+  }
+
+  let html = `<div class="block">
+    <span class="eyebrow">${draw ? 'Editing draw' : 'New draw'}</span>
+    <div class="form-grid" style="margin-top:12px">
+      <div class="field"><label for="fDate">Collection date</label>
+        <input type="date" id="fDate" value="${draw ? draw.date : today}"></div>
+      <div class="field"><label for="fLab">Lab or source</label>
+        <input type="text" id="fLab" placeholder="Quest, home cuff, hospital" value="${draw ? esc(draw.lab || '') : ''}"></div>
+      <div class="field" style="grid-column:1/-1"><label for="fNote">Note</label>
+        <input type="text" id="fNote" placeholder="Fasting, post-illness, new medication" value="${draw ? esc(draw.note || '') : ''}"></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <span class="eyebrow">What was ordered</span>
+    <div class="toolbar" style="margin:12px 0 0">
+      ${ORDERS.map(o => `<button class="chip" data-order="${o.key}" aria-pressed="${o.panels.every(p=>entryPanels.has(p))}">${esc(o.label)}</button>`).join('')}
+    </div>
+  </div>`;
+
+  const panelsToShow = PANELS.filter(p => entryPanels.has(p.key));
+  if(!panelsToShow.length){
+    html += `<div class="empty"><p>Pick the panels on your report. Leave any analyte blank if it wasn't measured.</p></div>`;
+  }
+  panelsToShow.forEach(p => {
+    html += `<div class="block"><div class="panel-head" style="margin-bottom:8px"><span class="eyebrow">${esc(p.name)}</span><span class="rule"></span></div>`;
+    A.filter(a => a.p === p.key).forEach(a => {
+      const v = draw && typeof draw.values[a.k] === 'number' ? draw.values[a.k] : '';
+      html += `<div class="entry-row">
+        <span class="en">${esc(a.n)} <span class="eu">${esc(refText(a))}</span></span>
+        <input type="text" inputmode="decimal" data-k="${a.k}" value="${v}" aria-label="${esc(a.n)} in ${esc(a.u)}">
+        <span class="eu">${esc(a.u)}</span>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+
+  html += `<div class="btnrow">
+    <button class="btn" id="saveDraw">${draw ? 'Save changes' : 'Save draw'}</button>
+    ${draw ? `<button class="btn ghost" id="cancelEdit">Cancel</button>` : ''}
+    <span class="note" style="margin:0">Values save to this browser only.</span>
+  </div>`;
+  el.innerHTML = html;
+
+  el.querySelectorAll('[data-order]').forEach(b => b.onclick = () => {
+    const o = ORDERS.find(x => x.key === b.dataset.order);
+    const on = o.panels.every(p => entryPanels.has(p));
+    o.panels.forEach(p => on ? entryPanels.delete(p) : entryPanels.add(p));
+    persistForm(); renderAdd();
+  });
+  el.querySelectorAll('.entry-row input').forEach(inp => inp.oninput = () => {
+    const a = BY_KEY[inp.dataset.k], n = parseVal(inp.value);
+    inp.classList.toggle('out', n !== null && status(n, refFor(a)) !== 'in');
+  });
+  el.querySelectorAll('.entry-row input').forEach(inp => {
+    const a = BY_KEY[inp.dataset.k], n = parseVal(inp.value);
+    inp.classList.toggle('out', n !== null && status(n, refFor(a)) !== 'in');
+  });
+  $('#saveDraw').onclick = saveDraw;
+  const c = $('#cancelEdit'); if(c) c.onclick = () => { editingId = null; entryPanels.clear(); renderAdd(); go('data'); };
+}
+
+let formCache = {};
+function persistForm(){
+  formCache = {date: $('#fDate').value, lab: $('#fLab').value, note: $('#fNote').value, values:{}};
+  document.querySelectorAll('#view-add .entry-row input').forEach(i => {
+    if(i.value.trim() !== '') formCache.values[i.dataset.k] = i.value;
+  });
+  // re-apply after re-render
+  setTimeout(() => {
+    if(!$('#fDate')) return;
+    $('#fDate').value = formCache.date; $('#fLab').value = formCache.lab; $('#fNote').value = formCache.note;
+    Object.entries(formCache.values).forEach(([k,v]) => {
+      const i = document.querySelector(`#view-add .entry-row input[data-k="${k}"]`);
+      if(i){ i.value = v; const n = parseVal(v); i.classList.toggle('out', n !== null && status(n, refFor(BY_KEY[k])) !== 'in'); }
+    });
+  }, 0);
+}
+function parseVal(raw){
+  if(raw === null || raw === undefined) return null;
+  const s = String(raw).replace(/[<>=\s,]/g, '');
+  if(s === '') return null;
+  const n = Number(s);
+  return Number.isFinite(n) ? n : null;
+}
+function saveDraw(){
+  const date = $('#fDate').value;
+  if(!date){ toast('A collection date is required.'); $('#fDate').focus(); return; }
+  const values = {};
+  let bad = 0;
+  document.querySelectorAll('#view-add .entry-row input').forEach(i => {
+    if(i.value.trim() === '') return;
+    const n = parseVal(i.value);
+    if(n === null){ bad++; return; }
+    values[i.dataset.k] = n;
+  });
+  if(bad){ toast(`${bad} field${bad>1?'s are':' is'} not a number — fix or clear ${bad>1?'them':'it'}.`); return; }
+  if(!Object.keys(values).length){ toast('Enter at least one value.'); return; }
+
+  const payload = {date, lab: $('#fLab').value.trim(), note: $('#fNote').value.trim(), values};
+  if(editingId){
+    const d = S.draws.find(x => x.id === editingId);
+    Object.assign(d, payload);
+    editingId = null;
+    toast('Draw updated.');
+  }else{
+    S.draws.push({id: 'd' + Date.now().toString(36) + Math.random().toString(36).slice(2,6), ...payload});
+    toast('Draw saved.');
+  }
+  entryPanels.clear(); formCache = {};
+  save(); renderAll(); go('latest');
+}
+
+function renderData(){
+  const el = $('#view-data');
+  const ds = sortedDraws();
+  let html = `<div class="block">
+    <span class="eyebrow">Reference intervals</span>
+    <div class="form-grid" style="margin-top:12px">
+      <div class="field"><label for="fSex">Sex used for sex-specific intervals</label>
+        <select id="fSex">
+          <option value="male" ${S.profile.sex==='male'?'selected':''}>Male</option>
+          <option value="female" ${S.profile.sex==='female'?'selected':''}>Female</option>
+        </select>
+        <span class="hint">Affects hemoglobin, hematocrit, RBC, creatinine, ferritin, HDL, uric acid.</span>
+      </div>
+    </div>
+    <p class="note">Built-in intervals are common adult ranges, not your lab's. Where they differ, set your own from the Trends view — ${Object.keys(S.overrides).length} analyte${Object.keys(S.overrides).length===1?'':'s'} currently overridden.
+    ${Object.keys(S.overrides).length ? `<button class="linkbtn" id="clearOvr" style="margin-left:8px">Reset all</button>` : ''}</p>
+  </div>
+
+  <div class="block">
+    <span class="eyebrow">Backup</span>
+    <p class="note">Everything lives in this browser's storage. Clearing site data erases it, so export before you switch machines.</p>
+    <div class="btnrow" style="margin-top:14px">
+      <button class="btn ghost" id="expBtn">Export JSON</button>
+      <button class="btn ghost" id="impBtn">Import JSON</button>
+      <input type="file" id="impFile" accept="application/json,.json" hidden>
+      <button class="btn ghost" onclick="window.print()">Print</button>
+      <button class="btn danger" id="wipeBtn">Erase everything</button>
+    </div>
+  </div>`;
+
+  if(!ds.length){
+    html += `<div class="empty"><p>No draws on file.</p><button class="btn" data-goto="add">Add result</button></div>`;
+  }else{
+    html += `<table class="draws"><thead><tr><th>Date</th><th>Source</th><th>Values</th><th>Note</th><th></th></tr></thead><tbody>`;
+    ds.forEach(d => {
+      const n = Object.keys(d.values).filter(k => BY_KEY[k]).length;
+      const out = Object.keys(d.values).filter(k => BY_KEY[k] && status(d.values[k], refFor(BY_KEY[k])) !== 'in').length;
+      html += `<tr>
+        <td class="d">${esc(d.date)}</td>
+        <td>${esc(d.lab || '—')}</td>
+        <td class="d">${n}${out ? ` <span style="color:var(--signal)">· ${out} out</span>` : ''}</td>
+        <td>${esc(d.note || '')}</td>
+        <td class="act"><button class="linkbtn" data-edit="${d.id}">Edit</button><button class="linkbtn" data-del="${d.id}">Delete</button></td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+  }
+  el.innerHTML = html;
+
+  $('#fSex').onchange = e => { S.profile.sex = e.target.value; save(); renderAll(); };
+  const co = $('#clearOvr'); if(co) co.onclick = () => { S.overrides = {}; save(); renderAll(); toast('Intervals reset to defaults.'); };
+  $('#expBtn').onclick = doExport;
+  $('#impBtn').onclick = () => $('#impFile').click();
+  $('#impFile').onchange = doImport;
+  $('#wipeBtn').onclick = () => {
+    if(confirm('Erase all draws and settings from this browser? Export first if you want a copy.')){
+      S = {schema:1, profile:{sex:'male'}, overrides:{}, draws:[]};
+      save(); renderAll(); toast('Everything erased.');
+    }
+  };
+  el.querySelectorAll('[data-edit]').forEach(b => b.onclick = () => {
+    editingId = b.dataset.edit; entryPanels.clear(); renderAdd(); go('add');
+  });
+  el.querySelectorAll('[data-del]').forEach(b => b.onclick = () => {
+    const d = S.draws.find(x => x.id === b.dataset.del);
+    if(confirm(`Delete the draw from ${d.date}?`)){
+      S.draws = S.draws.filter(x => x.id !== b.dataset.del);
+      save(); renderAll(); toast('Draw deleted.');
+    }
+  });
+}
+
+function doExport(){
+  const blob = new Blob([JSON.stringify(S, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `lab-record-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
+  toast('Exported.');
+}
+function doImport(e){
+  const f = e.target.files[0]; if(!f) return;
+  const rd = new FileReader();
+  rd.onload = () => {
+    try{
+      const inc = JSON.parse(rd.result);
+      if(!inc || !Array.isArray(inc.draws)) throw new Error('shape');
+      const have = new Set(S.draws.map(d => d.id));
+      let added = 0;
+      inc.draws.forEach(d => { if(!have.has(d.id)){ S.draws.push(d); added++; } });
+      S.overrides = {...S.overrides, ...(inc.overrides || {})};
+      if(inc.profile && inc.profile.sex) S.profile.sex = inc.profile.sex;
+      save(); renderAll();
+      toast(`Imported ${added} new draw${added===1?'':'s'}.`);
+    }catch(err){
+      toast('That file is not a lab record export.');
+    }
+    e.target.value = '';
+  };
+  rd.readAsText(f);
+}
+
+/* ============================ routing ============================ */
+function go(v){
+  view = v;
+  document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.view === v)));
+  ['latest','trends','add','data'].forEach(k => { $('#view-'+k).hidden = (k !== v); });
+  window.scrollTo({top:0, behavior:'instant'});
+}
+function renderAll(){
+  renderMasthead(); renderLatest(); renderTrends(); renderData(); renderAdd();
+}
+document.querySelectorAll('.tab').forEach(t => t.onclick = () => {
+  if(t.dataset.view === 'add' && view !== 'add'){ editingId = null; }
+  go(t.dataset.view);
+});
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-goto]');
+  if(b){ editingId = null; entryPanels.clear(); renderAdd(); go(b.dataset.goto); }
+});
+
+renderAll();
+go('latest');
+</script>
+</body>
+</html>
